@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<extension key="de.systopia.eventinvitation" type="module">
+  <file>eventinvitation</file>
+  <name>Event Invitation</name>
+  <description></description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>SYSTOPIA</author>
+    <email>zschiedrich@systopia.de</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">http://FIXME</url>
+    <url desc="Documentation">http://FIXME</url>
+    <url desc="Support">http://FIXME</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate></releaseDate>
+  <version>0.1.0-dev</version>
+  <develStage>dev</develStage>
+  <compatibility>
+    <ver>5.0</ver>
+  </compatibility>
+  <comments></comments>
+  <civix>
+    <namespace>CRM/Eventinvitation</namespace>
+  </civix>
+</extension>
