@@ -1,4 +1,5 @@
 <?php
+
 /*-------------------------------------------------------+
 | SYSTOPIA Event Invitation                              |
 | Copyright (C) 2020 SYSTOPIA                            |
