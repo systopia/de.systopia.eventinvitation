@@ -4,6 +4,10 @@ require_once 'eventinvitation.civix.php';
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
+// TODO: Invited anlegen per API: ParticipantStatusType per Upgrader (civix)
+// TODO: API wie in https://github.com/systopia/de.systopia.remotetools/blob/master/api/v3/RemoteContact/GetRoles.php
+//       -> EventInvitation.ResolveCode Code zu ParticipiantId/Fehler
+
 /**
  * Implements hook_civicrm_config().
  *
