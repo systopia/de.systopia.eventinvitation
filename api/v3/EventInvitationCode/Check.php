@@ -14,12 +14,15 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*/
 
+// TODO: API wie in https://github.com/systopia/de.systopia.remotetools/blob/master/api/v3/RemoteContact/GetRoles.php
+//       -> EventInvitation.ResolveCode Code zu ParticipiantId/Fehler
+
 /**
  * Specs for the check of an event invitation code.
  *
  * @param array $specs API specs
  */
-function _civicrm_api3_eventinvitationcode_check_spec(array &$specs)
+function _civicrm_api3_event_invitation_code_check_spec(array &$specs)
 {
     $specs['code'] = [
         'name' => 'code',
@@ -36,15 +39,19 @@ function _civicrm_api3_eventinvitationcode_check_spec(array &$specs)
  * @param array $params API parameters
  * @return array result
  */
-function civicrm_api3_eventinvitationcode_check(array $params)
+function civicrm_api3_event_invitation_code_check(array $params)
 {
     $code = $params['code'];
 
     if (empty($code)) {
         return civicrm_api3_create_error('No code given'); // TODO: Better message?
     } else {
-        $isValid = CRM_Eventinvitation_EventinvitationCode::check($code);
+        $participantId = CRM_Eventinvitation_EventinvitationCode::validate($code);
 
-        return civicrm_api3_create_success($isValid);
+        if ($participantId === null) {
+            return civicrm_api3_create_error('The code is invalid or expired.');
+        } else {
+            return civicrm_api3_create_success($participantId);
+        }
     }
 }
