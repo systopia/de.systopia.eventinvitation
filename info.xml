@@ -20,6 +20,9 @@
   <compatibility>
     <ver>5.0</ver>
   </compatibility>
+  <requires>
+    <ext>de.systopia.remotetools</ext>
+  </requires>
   <comments></comments>
   <civix>
     <namespace>CRM/Eventinvitation</namespace>
