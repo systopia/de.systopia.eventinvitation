@@ -118,8 +118,6 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             $this->_errors['template_has_no_code_token'] = E::ts('The given template includes no token for the invitation code/URL.');
         }
 
-        $testus = $this->_errors;
-
         parent::validate();
 
         $result = count($this->_errors) == 0;
@@ -171,7 +169,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             ]
         );
 
-        $result = $queryResult['result'] == 0;
+        $result = $queryResult['result'] > 0;
 
         return $result;
     }
