@@ -26,12 +26,15 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
 
     /**
      * Launch the runner for the e-mail sender.
-     * @param string[] $contactIds
-     * @param string $template
+     * @param CRM_Eventinvitation_Object_RunnerData $runnerData
+     * @param string $emailSender
      * @param string $targetUrl The URL we shall redirect after the runner has been finished.
      */
-    public static function launchEmailSender(array $contactIds, string $template, string $targetUrl): void
-    {
+    public static function launchEmailSender(
+        CRM_Eventinvitation_Object_RunnerData $runnerData,
+        string $emailSender,
+        string $targetUrl
+    ): void {
         // TODO: Could the two launch methods share some code that is the same? Via a third method maybe?
 
         $queue = CRM_Queue_Service::singleton()->create(
@@ -42,17 +45,19 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
             ]
         );
 
-        $dataCount = count($contactIds);
+        $dataCount = count($runnerData->contactIds);
 
         for ($offset = 0; $offset < $dataCount; $offset += self::EMAIL_BATCH_SIZE) {
-            $batchedContactIds = array_slice($contactIds, $offset, self::EMAIL_BATCH_SIZE);
+            $batchedContactIds = array_slice($runnerData->contactIds, $offset, self::EMAIL_BATCH_SIZE);
+
+            $batchedRunnerData = new CRM_Eventinvitation_Object_RunnerData($runnerData->toArray());
+            $batchedRunnerData->contactIds = $batchedContactIds;
 
             $queue->createItem(
                 new CRM_Eventinvitation_Queue_Runner_EmailSender(
-                    $batchedContactIds,
-                    $template,
-                    $offset,
-                    self::EMAIL_BATCH_SIZE
+                    $batchedRunnerData,
+                    $emailSender,
+                    $offset
                 )
             );
         }
@@ -77,6 +82,8 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
      */
     public static function launchPdfGenerator(array $contactIds, string $template, string $targetUrl): void
     {
+        // FIXME: This is not properly implemented!
+
         $queue = CRM_Queue_Service::singleton()->create(
             [
                 'type' => 'Sql',
