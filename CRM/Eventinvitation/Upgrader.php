@@ -35,7 +35,14 @@ class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
                 'ParticipantStatusType',
                 'create',
                 [
-                    'name' => self::PARTICIPANT_STATUS_INVITED_NAME
+                    'name' => self::PARTICIPANT_STATUS_INVITED_NAME,
+                    'label' => E::ts('Invited'),
+                    'visibility_id' => 'public',
+                    'class' => 'Waiting', // TODO: Should this be "Pending" instead?
+                    'is_active' => 1,
+                    // TODO: Should we set "is_reserved"?
+                    // TODO: Should we set "weight"?
+                    // TODO: What about "is_counted"?
                 ]
             );
         }
