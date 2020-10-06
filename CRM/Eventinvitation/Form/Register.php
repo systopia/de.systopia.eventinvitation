@@ -24,7 +24,7 @@ class CRM_Eventinvitation_Page_Register extends CRM_Core_Form
 
         $code = $_REQUEST['cid'];
 
-        $participantId = CRM_Eventinvitation_EventinvitationCode::validate($code);
+        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
 
         if ($participantId === null) {
             // TODO: What should we do here?
@@ -61,7 +61,7 @@ class CRM_Eventinvitation_Page_Register extends CRM_Core_Form
 
         $code = $_REQUEST['cid'];
 
-        $participantId = CRM_Eventinvitation_EventinvitationCode::validate($code);
+        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
 
         if ($participantId === null) {
             // TODO: What should we do here?

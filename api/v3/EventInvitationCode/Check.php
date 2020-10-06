@@ -46,7 +46,7 @@ function civicrm_api3_event_invitation_code_check(array $params)
     if (empty($code)) {
         return civicrm_api3_create_error('No code given'); // TODO: Better message?
     } else {
-        $participantId = CRM_Eventinvitation_EventinvitationCode::validate($code);
+        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
 
         if ($participantId === null) {
             return civicrm_api3_create_error('The code is invalid or expired.');
