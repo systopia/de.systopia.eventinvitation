@@ -12,20 +12,25 @@
 | at www.gnu.org/licenses/agpl.html. Removal of this     |
 | copyright header is strictly prohibited without        |
 | written permission from the original author(s).        |
-+--------------------------------------------------------*/
++-------------------------------------------------------*/
 
-use CRM_Eventinvitation_ExtensionUtil as E;
-
-// TODO: Name of the page
-class CRM_Eventinvitation_Page_Invited extends CRM_Core_Page
+/**
+ * Contains the data stored and used by the runners.
+ */
+class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_BaseClass
 {
-    public function run()
-    {
-        CRM_Utils_System::setTitle(E::ts('Successfully invited'));
+    /** @var string[] $contactIds */
+    public $contactIds;
 
-        // TODO: Do we need more here?
-        // TODO: Is the template enough?
+    /** @var string $eventId */
+    public $eventId;
 
-        parent::run();
-    }
+    /** @var string $participantRoleId */
+    public $participantRoleId;
+
+    /** @var string $templateId */
+    public $templateId;
+
+    /** @var array $templateTokens */
+    public $templateTokens;
 }
