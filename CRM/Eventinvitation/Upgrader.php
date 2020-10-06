@@ -16,15 +16,17 @@
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-class CRM_Eventinvitation_Upgrader_Base
+class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
 {
+    public const PARTICIPANT_STATUS_INVITED_NAME = 'Invited';
+
     public function onInstall(): void
     {
         $apiResult = civicrm_api3(
             'ParticipantStatusType',
             'get',
             [
-                'name' => 'Invited'
+                'name' => self::PARTICIPANT_STATUS_INVITED_NAME
             ]
         );
 
@@ -33,7 +35,7 @@ class CRM_Eventinvitation_Upgrader_Base
                 'ParticipantStatusType',
                 'create',
                 [
-                    'name' => 'Invited'
+                    'name' => self::PARTICIPANT_STATUS_INVITED_NAME
                 ]
             );
         }
@@ -45,16 +47,18 @@ class CRM_Eventinvitation_Upgrader_Base
             'ParticipantStatusType',
             'get',
             [
-                'name' => 'Invited'
+                'name' => self::PARTICIPANT_STATUS_INVITED_NAME
             ]
         );
 
-        civicrm_api3(
-            'ParticipantStatusType',
-            'delete',
-            [
-                'id' => $apiResult['id']
-            ]
-        );
+        if ($apiResult['count'] != 0) {
+            civicrm_api3(
+                'ParticipantStatusType',
+                'delete',
+                [
+                    'id' => $apiResult['values']['id']
+                ]
+            );
+        }
     }
 }
