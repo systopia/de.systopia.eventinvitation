@@ -46,6 +46,7 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
         foreach ($this->runnerData->contactIds as $contactId) {
             try {
                 $this->setParticipantToInvited($contactId);
+                $this->setTemplateTokens();
                 $this->sendEmail($contactId);
             } catch (Exception $error) {
                 // FIXME: What to do with errors?
@@ -67,6 +68,33 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
                 'role_id' => $this->runnerData->participantRoleId,
             ]
         );
+    }
+
+    private function setTemplateTokens(): void
+    {
+        $invitationCode = CRM_Eventinvitation_EventInvitationCode::generate($this->runnerData->participantRoleId);
+
+        $settings = Civi::settings()->get(CRM_Eventinvitation_Form_Settings::SETTINGS_KEY);
+
+        $link = '';
+
+        if (
+            is_array($settings)
+            && array_key_exists(CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME, $settings)
+            && array_key_exists(CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME, $settings)
+        ) {
+            $link = $settings[CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME];
+
+            $link .= '?code=' + $invitationCode; // TODO: This is reaaally ugly and must be standardised.
+        } else {
+            $path = 'civicrm/eventinvitation/register'; // NOTE: This must be adjusted if the URL in the menu XML is ever changed.
+
+            $link = CRM_Utils_System::url($path, ['code' => $invitationCode], true, null);
+        }
+
+        $this->runnerData->templateTokens = [
+            CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN => $link,
+        ];
     }
 
     private function sendEmail(string $contactId): void

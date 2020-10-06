@@ -24,7 +24,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
     private const EMAIL_SENDER_ELEMENT_NAME = 'email_sender';
     private const PARTICIPANT_ROLES_ELEMENT_NAME = 'participant_roles';
 
-    private const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
+    // TODO: Find a better (more central) place for this constant!
+    public const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
 
     public function buildQuickForm()
     {
@@ -207,12 +208,6 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $runnerData->participantRoleId = $values[self::PARTICIPANT_ROLES_ELEMENT_NAME];
         $runnerData->templateId = $values[self::TEMPLATE_ELEMENT_NAME];
 
-        $invitationCode = CRM_Eventinvitation_EventinvitationCode::generate($runnerData->participantRoleId);
-
-        $runnerData->templateTokens = [
-            self::TEMPLATE_CODE_TOKEN => $shallBePdfs ? $invitationCode : $this->getRegisterPageLink($invitationCode),
-        ];
-
         // Forward back to the search:
         $targetUrl = CRM_Core_Session::singleton()->readUserContext();
 
@@ -285,28 +280,5 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         }
 
         return $list;
-    }
-
-    private function getRegisterPageLink(string $invitationCode): string
-    {
-        $settings = Civi::settings()->get(CRM_Eventinvitation_Form_Settings_AdminSettings::SETTINGS_KEY);
-
-        $link = '';
-
-        if (
-            is_array($settings)
-            && array_key_exists(CRM_Eventinvitation_Form_Settings_AdminSettings::LINK_TARGET_IS_CUSTOM_FORM_NAME, $settings)
-            && array_key_exists(CRM_Eventinvitation_Form_Settings_AdminSettings::CUSTOM_LINK_TARGET_FORM_NAME, $settings)
-        ) {
-            $link = $settings[CRM_Eventinvitation_Form_Settings_AdminSettings::CUSTOM_LINK_TARGET_FORM_NAME];
-
-            $link .= '?code=' + $invitationCode; // TODO: This is reaaally ugly and must be standardised.
-        } else {
-            $path = 'civicrm/eventinvitation/register'; // NOTE: This must be adjusted if the URL in the menu XML is ever changed.
-
-            $link = CRM_Utils_System::url($path, ['code' => $invitationCode], true, null);
-        }
-
-        return $link;
     }
 }
