@@ -9,4 +9,10 @@
         <adminGroup>Communications</adminGroup>
         <icon>admin/small/rela_type.png</icon>
     </item>
+    <!-- Forms -->
+    <item>
+        <path>civicrm/eventinvitation/register</path>
+        <page_callback>CRM_Eventinvitation_Page_Register</page_callback>
+        <title>Event Invitation Registering</title> <!-- TODO: Can this be translated? -->
+    </item>
 </menu>

@@ -12,4 +12,12 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*}
 
-<h1>{ts domain="de.systopia.eventinvitation"}Congratulations! You have been successfully invited.{/ts}</h1>
+{crmScope extensionKey='de.systopia.eventinvitation'}
+    <h2>{$headline}</h2>
+
+    {* FOOTER *}
+    <br>
+    <div class="crm-submit-buttons">
+        {include file="CRM/common/formButtons.tpl" location="bottom"}
+    </div>
+{/crmScope}
