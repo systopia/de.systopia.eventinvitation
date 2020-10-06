@@ -4,9 +4,17 @@ require_once 'eventinvitation.civix.php';
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-// TODO: Invited anlegen per API: ParticipantStatusType per Upgrader (civix)
-// TODO: API wie in https://github.com/systopia/de.systopia.remotetools/blob/master/api/v3/RemoteContact/GetRoles.php
-//       -> EventInvitation.ResolveCode Code zu ParticipiantId/Fehler
+function eventinvitation_civicrm_searchTasks($objectType, &$tasks)
+{
+    // add "Invite to event" task to contact list
+    if ($objectType == 'contact') {
+        $tasks[] = [
+            'title' => E::ts('Invite to event'),
+            'class' => 'CRM_Eventinvitation_Form_Task_ContactSearch',
+            'result' => false
+        ];
+    }
+}
 
 /**
  * Implements hook_civicrm_config().

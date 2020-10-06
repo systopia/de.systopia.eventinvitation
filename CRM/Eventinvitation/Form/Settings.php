@@ -18,10 +18,11 @@ use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_Form_Settings_AdminSettings extends CRM_Core_Form
 {
-    private const LINK_TARGET_IS_CUSTOM_FORM_NAME = 'link_target_is_custom';
-    private const CUSTOM_LINK_TARGET_FORM_NAME = 'custom_link_target';
+    // TODO: These (three) settings constants should be at a more central place and be renamed:
+    public const LINK_TARGET_IS_CUSTOM_FORM_NAME = 'link_target_is_custom';
+    public const CUSTOM_LINK_TARGET_FORM_NAME = 'custom_link_target';
 
-    private const SETTINGS_KEY = 'eventinvitation_settings';
+    public const SETTINGS_KEY = 'eventinvitation_settings';
 
     public function buildQuickForm()
     {
@@ -43,7 +44,6 @@ class CRM_Eventinvitation_Form_Settings_AdminSettings extends CRM_Core_Form
             E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'),
             'url'
         );
-
 
         $settings = Civi::settings()->get(self::SETTINGS_KEY);
         $this->setDefaults($settings);
