@@ -16,7 +16,7 @@
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-class CRM_Eventinvitation_Form_Settings_AdminSettings extends CRM_Core_Form
+class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form
 {
     // TODO: These (three) settings constants should be at a more central place and be renamed:
     public const LINK_TARGET_IS_CUSTOM_FORM_NAME = 'link_target_is_custom';
