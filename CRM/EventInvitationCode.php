@@ -16,33 +16,33 @@
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-class CRM_Eventinvitation_EventinvitationCode extends CRM_Contact_Form_Task
+class CRM_Eventinvitation_EventinvitationCode
 {
-    public static function generate(int $contactId): string
+    private const PARTICIPANT_CODE_USAGE = 'invite';
+
+    public static function generate(string $participantId): string
     {
-        // TODO: Generate code!
-        // NOTE: Kodiert Participant-ID
-        // NOTE: Fälschungssicher, nicht ratbar
-        // NOTE: Gut lesbar als Base32 oder ähnliches ausgeben.
-        // NOTE: Unter Nutzung des Kontakthash?
+        $code = CRM_Remotetools_SecureToken::generateEntityToken(
+            'Participant',
+            $participantId,
+            null,
+            self::PARTICIPANT_CODE_USAGE
+        );
 
-        // NOTE: Da der Kontakthash für andere Dinge benutzt werden kann (überall in CiviCRM und von jeder Erweiterung)
-        //       kann er nicht als (kryptografisch) sicher betrachtet werden. Damit steht kein anderer Schlüsselkandidat
-        //       für eine Verschlüsselung der Participant-ID zur Verfügung und es muss auf eine Hashfunktion mit offen
-        //       liegender Participant-ID gewechselt werden.
-        //       Einzige Ausnahme: Verschleierung
-
-        return '';
+        return $code;
     }
 
-    // TODO: Rename to "validate" or something else?
-    public static function check(string $code): bool
+    /**
+     * @return string|null The participant ID or, if invalid, null.
+     */
+    public static function validate(string $code)
     {
-        // TODO: Check/validate!
-        // FIXME: Was genau?
+        $participantId = CRM_Remotetools_SecureToken::decodeEntityToken(
+            'Participant',
+            $code,
+            self::PARTICIPANT_CODE_USAGE
+        );
 
-        // TODO: Gegebenenfalls Dekodieren (Base32 etc.)
-
-        return false;
+        return $participantId;
     }
 }
