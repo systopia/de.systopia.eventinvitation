@@ -21,34 +21,73 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
     /** @var string $title Will be set as title by the runner. */
     public $title;
 
-    /** @var string[] $contactIds The contacts that shall be added to the group. */
-    protected $contactIds;
+    /** @var CRM_Eventinvitation_Object_RunnerData $runnerData */
+    private $runnerData;
 
-    /** @var string $template */
-    protected $template;
+    /** @var string $emailSender */
+    private $emailSender;
 
-    /**
-     * @param int $offset The contacts offset for this runner instance.
-     * @param int $count The number of contacts this runner instance shall work on.
-     */
-    public function __construct(array $contactIds, string $template, int $offset, int $count)
-    {
-        $this->contactIds = $contactIds;
-        $this->template = $template;
+    public function __construct(
+        CRM_Eventinvitation_Object_RunnerData $runnerData,
+        string $emailSender,
+        int $offset
+    ) {
+        $this->runnerData = $runnerData;
+        $this->emailSender = $emailSender;
 
-        $this->title = E::ts('Sending e-mails %1 to %2.', [1 => $offset + 1, 2 => $offset + $count]);
+        $start = $offset + 1;
+        $end = $offset + count($runnerData->contactIds);
+
+        $this->title = E::ts('Sending e-mails %1 to %2.', [1 => $start, 2 => $end]);
     }
 
     public function run(): bool
     {
-        // TODO: Send e-mails!
-        // https://github.com/systopia/de.systopia.eventmessages/blob/master/CRM/Eventmessages/SendMail.php
-
-        // TODO: Empfänger E-Mail (+Name?)
-        // TODO: Absender E-Mail (+Name?) -> Fabian abwarten.
-        // TODO: Was noch genau?
-        // TODO: Der Launcher muss diese Werte übergeben!
+        foreach ($this->runnerData->contactIds as $contactId) {
+            try {
+                $this->setParticipantToInvited($contactId);
+                $this->sendEmail($contactId);
+            } catch (Exception $error) {
+                // FIXME: What to do with errors?
+            }
+        }
 
         return true;
+    }
+
+    private function setParticipantToInvited(string $contactId): void
+    {
+        civicrm_api3(
+            'Participant',
+            'create',
+            [
+                'event_id' => $this->runnerData->eventId,
+                'contact_id' => $contactId,
+                'status_id' => CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME,
+                'role_id' => $this->runnerData->participantRoleId,
+            ]
+        );
+    }
+
+    private function sendEmail(string $contactId): void
+    {
+        $contactData = civicrm_api3(
+            'Contact',
+            'getsingle',
+            [
+                'id' => $contactId,
+            ]
+        );
+
+        $emailData = [
+            'id' => $this->runnerData->templateId,
+            'toName' => $contactData['display_name'],
+            'toEmail' => $contactData['email'],
+            'from' => $this->emailSender,
+            'contactId' => $contactId,
+            'tplParams' => $this->runnerData->templateTokens,
+        ];
+
+        civicrm_api3('MessageTemplate', 'send', $emailData);
     }
 }
