@@ -24,6 +24,9 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
     private const EMAIL_SENDER_ELEMENT_NAME = 'email_sender';
     private const PARTICIPANT_ROLES_ELEMENT_NAME = 'participant_roles';
 
+    private const SETTINGS_KEY = 'eventinvitation_form_task_contactsearch_settings';
+    private const TEMPLATE_SETTINGS_KEY = 'template_default';
+
     // TODO: Find a better (more central) place for this constant!
     public const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
 
@@ -64,7 +67,6 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
                 'class' => 'crm-select2 huge',
             ]
         );
-        // TODO: Set the last chosen template as default.
 
         $senderOptions = $this->getSenderOptions();
         $this->add(
@@ -89,6 +91,17 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
                 'class' => 'crm-select2 huge',
             ]
         );
+
+        $defaults = [];
+
+        $settings = Civi::settings()->get(self::SETTINGS_KEY);
+
+        // Prefill the selected template if there is one in the settings:
+        if ($settings && is_array($settings) && array_key_exists(self::TEMPLATE_SETTINGS_KEY, $settings)) {
+            $defaults[self::TEMPLATE_ELEMENT_NAME] = $settings[self::TEMPLATE_SETTINGS_KEY];
+        }
+
+        $this->setDefaults($defaults);
     }
 
     public function validate()
