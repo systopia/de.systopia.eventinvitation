@@ -93,7 +93,7 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
         ) {
             $link = $settings[CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME];
 
-            $link .= '?code=' + $invitationCode; // TODO: This is reaaally ugly and must be standardised.
+            $link .= '?token=' . $invitationCode; // TODO: This is reaaally ugly and must be standardised.
         } else {
             $path = 'civicrm/eventinvitation/register'; // NOTE: This must be adjusted if the URL in the menu XML is ever changed.
 

@@ -199,7 +199,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             ]
         );
 
-        $token = '{' . self::TEMPLATE_CODE_TOKEN . '}';
+        $token = '{$' . self::TEMPLATE_CODE_TOKEN . '}';
 
         $result = strpos($templateText, $token) !== false;
 
