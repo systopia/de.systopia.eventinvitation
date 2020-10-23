@@ -18,18 +18,31 @@ use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_Form_Register extends CRM_Core_Form
 {
+    /** @var string $code */
+    public $code;
+
     public function buildQuickForm()
     {
+        // TODO: Show something here after registering!
+
         parent::buildQuickForm();
 
-        $code = $_REQUEST['cid'];
+        $this->code = CRM_Utils_Request::retrieve('code', 'String', $this);
 
-        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
+        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
 
         if ($participantId === null) {
-            // TODO: What should we do here?
-            $eventName = '';
+            $headline = E::ts('Invalid or expired invite code');
         } else {
+            $isAlreadyRegistered = civicrm_api3(
+                'Participant',
+                'getcount',
+                [
+                    'id' => $participantId,
+                    'status_id' => 'Registered',
+                ]
+            );
+
             $eventName = civicrm_api3(
                 'Participant',
                 'getvalue',
@@ -38,30 +51,32 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form
                     'id' => $participantId,
                 ]
             );
+
+            if ($isAlreadyRegistered) {
+                $headline = E::ts('Congratulations! You have successfully registered for the event "%1"!', [1 => $eventName]);
+            } else {
+                $headline = E::ts('Do you want to register for the event "%1"?', [1 => $eventName]);
+
+                $this->addButtons(
+                    [
+                        [
+                            'type' => 'submit',
+                            'name' => E::ts('Register'),
+                            'isDefault' => true,
+                        ],
+                    ]
+                );
+            }
         }
 
-        $headline = E::ts('Do you want to register for the event "%1"?', [1 => $eventName]);
-
         $this->assign('headline', $headline);
-
-        $this->addButtons(
-            [
-                [
-                    'type' => 'submit',
-                    'name' => E::ts('Register'),
-                    'isDefault' => true,
-                ],
-            ]
-        );
     }
 
     public function postProcess()
     {
         parent::postProcess();
 
-        $code = $_REQUEST['cid'];
-
-        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
+        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
 
         if ($participantId === null) {
             // TODO: What should we do here?
