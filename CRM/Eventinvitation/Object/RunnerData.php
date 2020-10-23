@@ -30,7 +30,4 @@ class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_B
 
     /** @var string $templateId */
     public $templateId;
-
-    /** @var array $templateTokens */
-    public $templateTokens;
 }

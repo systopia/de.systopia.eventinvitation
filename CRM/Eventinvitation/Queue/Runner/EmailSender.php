@@ -45,9 +45,9 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
     {
         foreach ($this->runnerData->contactIds as $contactId) {
             try {
-                $this->setParticipantToInvited($contactId);
-                $this->setTemplateTokens();
-                $this->sendEmail($contactId);
+                $participantId = $this->setParticipantToInvited($contactId);
+                $templateTokens = $this->setTemplateTokens($participantId);
+                $this->sendEmail($contactId, $templateTokens);
             } catch (Exception $error) {
                 // FIXME: What to do with errors?
             }
@@ -56,9 +56,9 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
         return true;
     }
 
-    private function setParticipantToInvited(string $contactId): void
+    private function setParticipantToInvited(string $contactId): int
     {
-        civicrm_api3(
+        $queryResult = civicrm_api3(
             'Participant',
             'create',
             [
@@ -68,11 +68,13 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
                 'role_id' => $this->runnerData->participantRoleId,
             ]
         );
+
+        return $queryResult['id'];
     }
 
-    private function setTemplateTokens(): void
+    private function setTemplateTokens(int $participantId): array
     {
-        $invitationCode = CRM_Eventinvitation_EventInvitationCode::generate($this->runnerData->participantRoleId);
+        $invitationCode = CRM_Eventinvitation_EventInvitationCode::generate($participantId);
 
         $settings = Civi::settings()->get(CRM_Eventinvitation_Form_Settings::SETTINGS_KEY);
 
@@ -92,18 +94,21 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
             $link = CRM_Utils_System::url($path, ['code' => $invitationCode], true, null);
         }
 
-        $this->runnerData->templateTokens = [
+        $templateTokens = [
             CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN => $link,
         ];
+
+        return $templateTokens;
     }
 
-    private function sendEmail(string $contactId): void
+    private function sendEmail(string $contactId, array $templateTokens): void
     {
         $contactData = civicrm_api3(
             'Contact',
             'getsingle',
             [
                 'id' => $contactId,
+                'return' => 'display_name,email'
             ]
         );
 
@@ -113,7 +118,7 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
             'toEmail' => $contactData['email'],
             'from' => $this->emailSender,
             'contactId' => $contactId,
-            'tplParams' => $this->runnerData->templateTokens,
+            'tplParams' => $templateTokens,
         ];
 
         civicrm_api3('MessageTemplate', 'send', $emailData);

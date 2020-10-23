@@ -213,7 +213,10 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $values = $this->exportValues(null, true);
 
         $shallBePdfs = $values[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME];
-        $emailSender = $values[self::EMAIL_SENDER_ELEMENT_NAME];
+        $emailSenderId = $values[self::EMAIL_SENDER_ELEMENT_NAME];
+
+        $senderOptions = $this->getSenderOptions();
+        $emailSender = $senderOptions[$emailSenderId];
 
         $runnerData = new CRM_Eventinvitation_Object_RunnerData();
         $runnerData->contactIds = $this->_contactIds;
