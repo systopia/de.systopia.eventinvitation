@@ -108,15 +108,15 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $contactIds = $this->_contactIds;
 
         if (!$shallBePdfs && !$this->contactsHaveEmails($contactIds)) {
-            $this->_errors['contacts_have_no_email'] = E::ts("There are contacts that have no e-mail address.");
+            $this->_errors[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME] = E::ts("There are contacts that have no e-mail address.");
         }
 
         if ($this->contactsHaveNotInvitedParticipants($contactIds, $eventId, $participantRoleId)) {
-            $this->_errors['contacts_have_not_invited_participants'] = E::ts('There are contacts that are participants with a status other than "Invited".');
+            $this->_errors[self::EVENT_ELEMENT_NAME] = E::ts('There are contacts that are participants with a status other than "Invited".');
         }
 
         if (!$this->templateHasCodeToken($templateId)) {
-            $this->_errors['template_has_no_code_token'] = E::ts('The given template includes no token for the invitation code/URL.');
+            $this->_errors[self::TEMPLATE_ELEMENT_NAME] = E::ts('The given template includes no token for the invitation code/URL.');
         }
 
         parent::validate();
