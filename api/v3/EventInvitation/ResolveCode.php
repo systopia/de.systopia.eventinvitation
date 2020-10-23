@@ -14,15 +14,12 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*/
 
-// TODO: API wie in https://github.com/systopia/de.systopia.remotetools/blob/master/api/v3/RemoteContact/GetRoles.php
-//       -> EventInvitation.ResolveCode Code zu ParticipiantId/Fehler
-
 /**
- * Specs for the check of an event invitation code.
+ * Specs for the resolve of an event invitation code.
  *
  * @param array $specs API specs
  */
-function _civicrm_api3_event_invitation_code_check_spec(array &$specs)
+function _civicrm_api3_event_invitation_resolve_code_spec(array &$specs)
 {
     $specs['code'] = [
         'name' => 'code',
@@ -34,12 +31,12 @@ function _civicrm_api3_event_invitation_code_check_spec(array &$specs)
 }
 
 /**
- * Check an event invitation code.
+ * Resolve an event invitation code.
  *
  * @param array $params API parameters
- * @return array result
+ * @return array The participant ID
  */
-function civicrm_api3_event_invitation_code_check(array $params)
+function civicrm_api3_event_invitation_resolve_code(array $params)
 {
     $code = $params['code'];
 
