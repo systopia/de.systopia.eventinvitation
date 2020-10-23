@@ -16,7 +16,7 @@
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-class CRM_Eventinvitation_Page_Register extends CRM_Core_Form
+class CRM_Eventinvitation_Form_Register extends CRM_Core_Form
 {
     public function buildQuickForm()
     {
