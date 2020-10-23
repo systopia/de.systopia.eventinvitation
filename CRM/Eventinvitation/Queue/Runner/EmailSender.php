@@ -44,13 +44,19 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
     public function run(): bool
     {
         foreach ($this->runnerData->contactIds as $contactId) {
+            $transaction = new CRM_Core_Transaction();
+
             try {
                 $participantId = $this->setParticipantToInvited($contactId);
                 $templateTokens = $this->setTemplateTokens($participantId);
                 $this->sendEmail($contactId, $templateTokens);
             } catch (Exception $error) {
-                // FIXME: What to do with errors?
+                $transaction->rollback();
+
+                // TODO: How could we inform about errors?
             }
+
+            $transaction->commit();
         }
 
         return true;
