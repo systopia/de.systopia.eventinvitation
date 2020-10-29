@@ -26,10 +26,12 @@ class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form
 
     public function buildQuickForm()
     {
+        $this->setTitle(E::ts("Event Invitation Configuration"));
+
         $this->add(
             'checkbox',
             self::LINK_TARGET_IS_CUSTOM_FORM_NAME,
-            E::ts('Activate for using a custom target link. Otherwise the build-in page is used.')
+            E::ts('Enable custom endpoint')
         );
 
         $this->add(

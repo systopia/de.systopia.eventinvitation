@@ -34,6 +34,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
     {
         parent::buildQuickForm();
 
+        $this->setTitle(E::ts("Inviting %1 Contacts", [1 => count($this->_contactIds)]));
+
         $this->addEntityRef(
             self::EVENT_ELEMENT_NAME,
             E::ts('Event'),
