@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2020-10-29 18:14+0100\n"
+"POT-Creation-Date: 2020-10-29 18:46+0100\n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,8 +28,11 @@ msgid "Register"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php
-msgid ""
-"Activate for using a custom target link. Otherwise the build-in page is used."
+msgid "Event Invitation Configuration"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Settings.php
+msgid "Enable custom endpoint"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php
@@ -42,6 +45,10 @@ msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php
 msgid "Save"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Inviting %1 Contacts"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
@@ -104,4 +111,16 @@ msgstr ""
 
 #: eventinvitation.php
 msgid "Invite to event"
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"Activate using a custom target link. Otherwise the build-in page is used."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"You can provide a custom URL (beginning with 'http://' or 'https://' to link "
+"to another registration endpoint. The URL will be extended by the URL "
+"parameter <code>token</code> passing the registration token."
 msgstr ""
