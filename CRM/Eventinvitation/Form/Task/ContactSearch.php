@@ -193,20 +193,25 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 
     private function templateHasCodeToken(string $templateId): bool
     {
-        $templateText = civicrm_api3(
+        $template = civicrm_api3(
             'MessageTemplate',
-            'getvalue',
+            'getsingle',
             [
-                'return' => 'msg_text',
+                'return' => 'msg_text,msg_html',
                 'id' => $templateId,
             ]
         );
 
+        // check both type for the token, if present
         $token = '{$' . self::TEMPLATE_CODE_TOKEN . '}';
+        $has_token = true;
+        foreach (['msg_text', 'msg_html'] as $type) {
+            if (!empty($template[$type])) {
+                $has_token &= (strpos($template[$type], $token) !== false);
+            }
+        }
 
-        $result = strpos($templateText, $token) !== false;
-
-        return $result;
+        return $has_token;
     }
 
     public function postProcess()
@@ -215,7 +220,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 
         $values = $this->exportValues(null, true);
 
-        $shallBePdfs = $values[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME];
+        $shallBePdfs = !empty($values[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME]);
         $emailSenderId = $values[self::EMAIL_SENDER_ELEMENT_NAME];
 
         $senderOptions = $this->getSenderOptions();
@@ -269,6 +274,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             'get',
             [
                 'is_active' => 1,
+                'workflow_id' => ['IS NULL' => 1],
                 'option.limit' => 0,
                 'return' => 'id,msg_title',
             ]
