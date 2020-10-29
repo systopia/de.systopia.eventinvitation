@@ -18,14 +18,14 @@ use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 {
-    private const EVENT_ELEMENT_NAME = 'event';
-    private const PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME = 'pdfs_instead_of_emails';
-    private const TEMPLATE_ELEMENT_NAME = 'template';
-    private const EMAIL_SENDER_ELEMENT_NAME = 'email_sender';
-    private const PARTICIPANT_ROLES_ELEMENT_NAME = 'participant_roles';
+    const EVENT_ELEMENT_NAME = 'event';
+    const PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME = 'pdfs_instead_of_emails';
+    const TEMPLATE_ELEMENT_NAME = 'template';
+    const EMAIL_SENDER_ELEMENT_NAME = 'email_sender';
+    const PARTICIPANT_ROLES_ELEMENT_NAME = 'participant_roles';
 
-    private const SETTINGS_KEY = 'eventinvitation_form_task_contactsearch_settings';
-    private const TEMPLATE_SETTINGS_KEY = 'template_default';
+    const SETTINGS_KEY = 'eventinvitation_form_task_contactsearch_settings';
+    const TEMPLATE_SETTINGS_KEY = 'template_default';
 
     // TODO: Find a better (more central) place for this constant!
     const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';

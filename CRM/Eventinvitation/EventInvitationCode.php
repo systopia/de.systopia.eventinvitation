@@ -18,7 +18,7 @@ use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_EventInvitationCode
 {
-    private const PARTICIPANT_CODE_USAGE = 'invite';
+    const PARTICIPANT_CODE_USAGE = 'invite';
 
     public static function generate(string $participantId): string
     {
