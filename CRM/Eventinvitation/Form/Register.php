@@ -52,6 +52,8 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form
                 ]
             );
 
+            $this->setTitle(E::ts("Registration for '%1'", [1 => $eventName]));
+
             if ($isAlreadyRegistered) {
                 $headline = E::ts('Congratulations! You have successfully registered for the event "%1"!', [1 => $eventName]);
             } else {
