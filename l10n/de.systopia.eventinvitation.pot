@@ -1,0 +1,107 @@
+# Copyright CiviCRM LLC (c) 2004-2015
+# This file is distributed under the same license as the CiviCRM package.
+# If you contribute heavily to a translation and deem your work copyrightable,
+# make sure you license it to CiviCRM LLC under Academic Free License 3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: de.systopia.eventinvitation\n"
+"POT-Creation-Date: 2020-10-29 18:14+0100\n"
+"Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: CRM/Eventinvitation/Form/Register.php
+msgid "Invalid or expired invite code"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Register.php
+msgid "Congratulations! You have successfully registered for the event \"%1\"!"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Register.php
+msgid "Do you want to register for the event \"%1\"?"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Register.php
+msgid "Register"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Settings.php
+msgid ""
+"Activate for using a custom target link. Otherwise the build-in page is used."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Settings.php
+msgid "Custom link target URL:"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Settings.php
+msgid "Enter a valid web address beginning with 'http://' or 'https://'."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Settings.php
+msgid "Save"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Event"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Generate PDFs instead of sending e-mails."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Template"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "E-mail sender address"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Participant role"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "There are contacts that have no e-mail address."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid ""
+"There are contacts that are participants with a status other than \"Invited"
+"\"."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "The given template includes no token for the invitation code/URL."
+msgstr ""
+
+#: CRM/Eventinvitation/Queue/Runner/EmailSender.php
+msgid "Sending e-mails %1 to %2."
+msgstr ""
+
+#: CRM/Eventinvitation/Queue/Runner/Launcher.php
+msgid "Sending e-mails."
+msgstr ""
+
+#: CRM/Eventinvitation/Queue/Runner/Launcher.php
+msgid "Generating PDFs."
+msgstr ""
+
+#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
+msgid "Generating documents %1 to %2."
+msgstr ""
+
+#: CRM/Eventinvitation/Upgrader/Base.php
+msgid "Upgrade %1 to revision %2"
+msgstr ""
+
+#: CRM/Eventinvitation/Upgrader.php
+msgid "Invited"
+msgstr ""
+
+#: eventinvitation.php
+msgid "Invite to event"
+msgstr ""
