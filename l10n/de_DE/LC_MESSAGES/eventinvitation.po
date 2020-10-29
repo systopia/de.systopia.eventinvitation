@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2020-10-29 18:53+0100\n"
+"POT-Creation-Date: 2020-10-29 19:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
@@ -21,6 +21,10 @@ msgid "Invalid or expired invite code"
 msgstr "Code ungültig oder abgelaufen"
 
 #: CRM/Eventinvitation/Form/Register.php
+msgid "Registration for '%1'"
+msgstr "Anmeldung für '%1'"
+
+#: CRM/Eventinvitation/Form/Register.php
 msgid "Congratulations! You have successfully registered for the event \"%1\"!"
 msgstr ""
 "Gratuliere, Sie haben sich erfolgreich für die Veranstaltung \"%1\" "
@@ -28,7 +32,7 @@ msgstr ""
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Do you want to register for the event \"%1\"?"
-msgstr "Wollen Sie sich wirklich zur Veranstaltung \"%1\" anmelden?"
+msgstr "Möchten Sie Ihre Anmeldung zur Veranstaltung \"%1\" bestätigen?"
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Register"
@@ -135,9 +139,9 @@ msgstr ""
 msgid ""
 "You can provide a custom URL (beginning with 'http://' or 'https://' to link "
 "to another registration endpoint. The URL will be extended by the URL "
-"parameter <code>token</code> passing the registration token."
+"parameter <code>code</code> passing the registration token."
 msgstr ""
 "Sie können eine eigene URL als Zielpunkt für den Einladungslink angeben. Der "
 "Link muss mit 'http://' or 'https://' beginnen, und wird beim Erstellen um "
-"den URL Parameter <code>token</code> erweitert, der den Einladungstoken "
+"den URL Parameter <code>code</code> erweitert, der den Einladungstoken "
 "enthält."
