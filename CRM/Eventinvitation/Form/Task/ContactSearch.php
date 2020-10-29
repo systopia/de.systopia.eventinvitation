@@ -131,7 +131,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         }
 
         if (!$this->templateHasCodeToken($templateId)) {
-            $this->_errors[self::TEMPLATE_ELEMENT_NAME] = E::ts('The given template includes no token for the invitation code/URL.');
+            $this->_errors[self::TEMPLATE_ELEMENT_NAME] = E::ts("The given template doesn't contain the token <code>%1</code> for the invitation URL.",
+                [1 => '{$' . self::TEMPLATE_CODE_TOKEN . '}']);
         }
 
         parent::validate();

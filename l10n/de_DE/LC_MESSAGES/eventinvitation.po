@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2020-10-29 18:46+0100\n"
+"POT-Creation-Date: 2020-10-29 18:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
@@ -90,9 +90,11 @@ msgid ""
 msgstr "Einige der Kontakte haben bereits eine Status (außer 'Eingeladen')."
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
-msgid "The given template includes no token for the invitation code/URL."
+msgid ""
+"The given template doesn't contain the token <code>%1</code> for the "
+"invitation URL."
 msgstr ""
-"Die Vorlage enthält den Token für den Einladungslink oder den Code nicht."
+"Die Vorlage enthält den Token <code>%1</code> für den Einladungslink nicht."
 
 #: CRM/Eventinvitation/Queue/Runner/EmailSender.php
 msgid "Sending e-mails %1 to %2."
