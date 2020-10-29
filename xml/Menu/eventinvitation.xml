@@ -14,6 +14,7 @@
     <item>
         <path>civicrm/eventinvitation/register</path>
         <page_callback>CRM_Eventinvitation_Form_Register</page_callback>
-        <title>Event Invitation Registering</title> <!-- TODO: Can this be translated? -->
+        <title>Event Invitation Registering</title>
+        <access_arguments>*always allow*</access_arguments>
     </item>
 </menu>
