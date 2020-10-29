@@ -60,7 +60,7 @@ msgstr "Veranstaltung"
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
 msgid "Generate PDFs instead of sending e-mails."
-msgstr "PDF Dateien zum Ausdrucken erstellen."
+msgstr "Postalisch verschicken (PDF)"
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
 msgid "Template"
