@@ -8,9 +8,9 @@
  */
 class CRM_Eventinvitation_ExtensionUtil
 {
-    public const SHORT_NAME = "eventinvitation";
-    public const LONG_NAME = "de.systopia.eventinvitation";
-    public const CLASS_PREFIX = "CRM_Eventinvitation";
+    const SHORT_NAME = "eventinvitation";
+    const LONG_NAME = "de.systopia.eventinvitation";
+    const CLASS_PREFIX = "CRM_Eventinvitation";
 
     /**
      * Translate a string using the extension's domain.

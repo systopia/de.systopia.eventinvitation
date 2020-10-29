@@ -18,7 +18,7 @@ use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
 {
-    public const PARTICIPANT_STATUS_INVITED_NAME = 'Invited';
+    const PARTICIPANT_STATUS_INVITED_NAME = 'Invited';
 
     public function onInstall(): void
     {
@@ -31,6 +31,7 @@ class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
         );
 
         if ($apiResult['count'] === 0) {
+            $max_weight = (int) CRM_Core_DAO::singleValueQuery("SELECT MAX(weight) FROM civicrm_participant_status_type");
             civicrm_api3(
                 'ParticipantStatusType',
                 'create',
@@ -40,9 +41,9 @@ class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
                     'visibility_id' => 'public',
                     'class' => 'Waiting', // TODO: Should this be "Pending" instead?
                     'is_active' => 1,
-                    // TODO: Should we set "is_reserved"?
-                    // TODO: Should we set "weight"?
-                    // TODO: What about "is_counted"?
+                    'weight' => $max_weight + 1,
+                    'is_reserved' => 1,
+                    'is_counted' => 0,
                 ]
             );
         }

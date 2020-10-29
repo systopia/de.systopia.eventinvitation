@@ -28,7 +28,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
     private const TEMPLATE_SETTINGS_KEY = 'template_default';
 
     // TODO: Find a better (more central) place for this constant!
-    public const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
+    const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
 
     public function buildQuickForm()
     {
