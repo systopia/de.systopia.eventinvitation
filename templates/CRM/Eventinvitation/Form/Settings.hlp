@@ -1,0 +1,25 @@
+{*-------------------------------------------------------+
+| SYSTOPIA Event Invitation                              |
+| Copyright (C) 2020 SYSTOPIA                            |
+| Author: B. Zschiedrich (zschiedrich@systopia.de)       |
++--------------------------------------------------------+
+| This program is released as free software under the    |
+| Affero GPL license. You can redistribute it and/or     |
+| modify it under the terms of this license which you    |
+| can read by viewing the included agpl.txt or online    |
+| at www.gnu.org/licenses/agpl.html. Removal of this     |
+| copyright header is strictly prohibited without        |
+| written permission from the original author(s).        |
++--------------------------------------------------------*}
+
+{crmScope extensionKey='de.systopia.eventinvitation'}
+
+{htxt id='id-link-target-enabled'}
+  <p>Activate using a custom target link. Otherwise the build-in page is used.</p>
+{/htxt}
+
+{htxt id='id-link-target'}
+  <p>You can provide a custom URL (beginning with 'http://' or 'https://' to link to another registration endpoint. The URL will be extended by the URL parameter <code>token</code> passing the registration token.</p>
+{/htxt}
+  
+{/crmScope}

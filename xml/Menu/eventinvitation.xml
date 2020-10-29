@@ -4,7 +4,8 @@
     <item>
         <path>civicrm/eventinvitation/settings</path>
         <page_callback>CRM_Eventinvitation_Form_Settings</page_callback>
-        <title>Event Invitation Admin Settings</title> <!-- TODO: Can this be translated? -->
+        <title>Event Invitation Configuration</title>
+        <description>Allows you to explicitly invite your contacts to an event.</description>
         <access_arguments>administer CiviCRM</access_arguments>
         <adminGroup>Communications</adminGroup>
         <icon>admin/small/rela_type.png</icon>
