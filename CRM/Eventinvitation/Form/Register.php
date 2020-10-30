@@ -27,9 +27,12 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form
 
         parent::buildQuickForm();
 
+        $participantId = null;
         $this->code = CRM_Utils_Request::retrieve('code', 'String', $this);
 
-        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
+        if ($this->code) {
+            $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
+        }
 
         if ($participantId === null) {
             $headline = E::ts('Invalid or expired invite code');
