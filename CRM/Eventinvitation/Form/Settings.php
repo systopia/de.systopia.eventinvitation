@@ -46,6 +46,12 @@ class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form
             E::ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'),
             'url'
         );
+        $this->addRule(
+            self::CUSTOM_LINK_TARGET_FORM_NAME,
+            E::ts('The link must include the placeholder <code>{token}</code>.'),
+            'regex',
+            '/\{token\}/'
+        );
 
         $settings = Civi::settings()->get(self::SETTINGS_KEY);
         $this->setDefaults($settings);

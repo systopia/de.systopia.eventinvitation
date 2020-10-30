@@ -19,7 +19,7 @@
 {/htxt}
 
 {htxt id='id-link-target'}
-  <p>{ts}You can provide a custom URL (beginning with 'http://' or 'https://' to link to another registration endpoint. The URL will be extended by the URL parameter <code>code</code> passing the registration token.{/ts}</p>
+  <p>{ts}You can provide a custom URL to link to another registration endpoint. The URL must start with 'http://' or 'https://' and contain the the placeholder <code>&lbrace;token&rbrace;</code>.{/ts}</p>
 {/htxt}
 
 {/crmScope}

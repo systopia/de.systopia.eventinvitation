@@ -91,9 +91,12 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
             && array_key_exists(CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME, $settings)
             && array_key_exists(CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME, $settings)
         ) {
+            // get the link
             $link = $settings[CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME];
 
-            $link .= '?code=' . $invitationCode; // TODO: This is reaaally ugly and must be standardised.
+            // replace the code token
+            $link = preg_replace('/\{token\}/', $invitationCode, $link);
+
         } else {
             $path = 'civicrm/eventinvitation/register'; // NOTE: This must be adjusted if the URL in the menu XML is ever changed.
 
