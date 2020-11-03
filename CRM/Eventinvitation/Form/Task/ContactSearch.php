@@ -171,7 +171,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 
     private function contactsHaveNotInvitedParticipants(array $contactIds, string $eventId, string $participantRoleId): bool
     {
-        $queryResult = civicrm_api3(
+        $non_invite_participant_count = civicrm_api3(
             'Participant',
             'getcount',
             [
@@ -182,9 +182,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             ]
         );
 
-        $result = $queryResult['result'] > 0;
-
-        return $result;
+        return $non_invite_participant_count > 0;
     }
 
     private function templateHasCodeToken(string $templateId): bool
