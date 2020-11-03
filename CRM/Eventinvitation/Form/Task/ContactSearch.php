@@ -236,7 +236,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $runnerData->templateId = $values[self::TEMPLATE_ELEMENT_NAME];
 
         // Forward back to the search:
-        $targetUrl = CRM_Core_Session::singleton()->readUserContext();
+        $targetUrl = html_entity_decode(CRM_Core_Session::singleton()->readUserContext());
+
 
         if ($shallBePdfs) {
             //CRM_Eventinvitation_Queue_Runner_Launcher::launchPdfGenerator($runnerData, $targetUrl);
