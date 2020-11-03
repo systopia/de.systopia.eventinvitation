@@ -94,16 +94,12 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             ]
         );
 
-        $defaults = [];
-
-        $settings = Civi::settings()->get(self::SETTINGS_KEY);
-
-        // Prefill the selected template if there is one in the settings:
-        if ($settings && is_array($settings) && array_key_exists(self::TEMPLATE_SETTINGS_KEY, $settings)) {
-            $defaults[self::TEMPLATE_ELEMENT_NAME] = $settings[self::TEMPLATE_SETTINGS_KEY];
-        }
-
-        $this->setDefaults($defaults);
+        // set default values
+        $this->setDefaults([
+           self::TEMPLATE_ELEMENT_NAME          => Civi::settings()->get('event_invitation_default_template'),
+           self::EMAIL_SENDER_ELEMENT_NAME      => Civi::settings()->get('event_invitation_default_sender'),
+           self::PARTICIPANT_ROLES_ELEMENT_NAME => Civi::settings()->get('event_invitation_default_role'),
+        ]);
     }
 
     public function validate()
@@ -220,6 +216,15 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 
         $values = $this->exportValues(null, true);
 
+        // store defaults
+        Civi::settings()->set('event_invitation_default_template',
+                              CRM_Utils_Array::value(self::TEMPLATE_ELEMENT_NAME, $values, ''));
+        Civi::settings()->set('event_invitation_default_sender',
+                              CRM_Utils_Array::value(self::EMAIL_SENDER_ELEMENT_NAME, $values, ''));
+        Civi::settings()->set('event_invitation_default_role',
+                              CRM_Utils_Array::value(self::PARTICIPANT_ROLES_ELEMENT_NAME, $values, ''));
+
+        // evaluate submission
         $shallBePdfs = !empty($values[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME]);
         $emailSenderId = $values[self::EMAIL_SENDER_ELEMENT_NAME];
 
