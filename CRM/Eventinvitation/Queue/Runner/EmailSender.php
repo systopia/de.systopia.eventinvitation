@@ -62,20 +62,52 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
         return true;
     }
 
+    /**
+     * Mark the contact to be 'Invited'.
+     * Note that;
+     *  - they might already be invited - in which case we do nothing
+     *  - they might have already rejected, accepted, e.g. - in which case we also do nothing
+     *
+     * As a result: if there is already an existing participant for this contact/event, we do nothing.
+     * @todo: do we want to upgrade an exisiting invitation, e.g. the date?
+     *
+     * @param string $contactId
+     *   the contact that should be invited
+     *
+     * @return int
+     * @throws \CiviCRM_API3_Exception
+     */
     private function setParticipantToInvited(string $contactId): int
     {
-        $queryResult = civicrm_api3(
+        // check if there is/are already existing participants
+        $existing_participant = civicrm_api3(
             'Participant',
-            'create',
+            'get',
             [
                 'event_id' => $this->runnerData->eventId,
                 'contact_id' => $contactId,
-                'status_id' => CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME,
-                'role_id' => $this->runnerData->participantRoleId,
+                'option.limit' => 1,
             ]
         );
 
-        return $queryResult['id'];
+        if (!empty($existing_participant['id'])) {
+            // there is one, use that!
+            return $existing_participant['id'];
+
+        } else {
+            // if there isn't one: create
+            $queryResult = civicrm_api3(
+                'Participant',
+                'create',
+                [
+                    'event_id' => $this->runnerData->eventId,
+                    'contact_id' => $contactId,
+                    'status_id' => CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME,
+                    'role_id' => $this->runnerData->participantRoleId,
+                ]
+            );
+            return $queryResult['id'];
+        }
     }
 
     private function setTemplateTokens(int $participantId): array
