@@ -48,7 +48,7 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
 
             try {
                 $participantId = $this->setParticipantToInvited($contactId);
-                $templateTokens = $this->setTemplateTokens($participantId);
+                $templateTokens = $this->getTemplateTokens($participantId);
                 $this->sendEmail($contactId, $templateTokens);
             } catch (Exception $error) {
                 $transaction->rollback();
@@ -110,14 +110,23 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
         }
     }
 
-    private function setTemplateTokens(int $participantId): array
+    /**
+     * Generate
+     * @param int $participantId
+     *
+     * @return array
+     */
+    private function getTemplateTokens(int $participantId): array
     {
+        // collect some tokens for the
+        $templateTokens = [];
+
+        // get the invitation link
         $invitationCode = CRM_Eventinvitation_EventInvitationCode::generate($participantId);
 
         $settings = Civi::settings()->get(CRM_Eventinvitation_Form_Settings::SETTINGS_KEY);
 
         $link = '';
-
         if (
             is_array($settings)
             && array_key_exists(CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME, $settings)
@@ -135,10 +144,25 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender
             $link = CRM_Utils_System::url($path, ['code' => $invitationCode], true, null);
         }
 
-        $templateTokens = [
-            CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN => $link,
-        ];
+        $templateTokens[CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN] = $link;
 
+
+        // add some event data
+        static $event_data = null;
+        if ($event_data === null) {
+            if (!empty($this->runnerData->eventId)) {
+                try {
+                    $event_data = civicrm_api3('Event', 'getsingle', ['id' => $this->runnerData->eventId]);
+                } catch (CiviCRM_API3_Exception $ex) {
+                    $event_data = []; // don't look up again
+                    Civi::log()->error("Error loading event [{$this->runnerData->eventId}]: " . $ex->getMessage());
+                }
+            }
+        }
+        $templateTokens['event'] = $event_data;
+
+
+        // that's it:
         return $templateTokens;
     }
 
