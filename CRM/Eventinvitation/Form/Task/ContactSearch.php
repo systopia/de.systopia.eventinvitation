@@ -29,9 +29,12 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
 
     // TODO: Find a better (more central) place for this constant!
     const TEMPLATE_CODE_TOKEN = 'qr_event_invite_code';
+    const TEMPLATE_CODE_TOKEN_QR_DATA = 'qr_event_invite_code_data';
+    const TEMPLATE_CODE_TOKEN_QR_IMG = 'qr_event_invite_code_img';
 
     public function buildQuickForm()
     {
+
         parent::buildQuickForm();
 
         $this->setTitle(E::ts("Inviting %1 Contacts", [1 => count($this->_contactIds)]));
@@ -56,7 +59,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME,
             E::ts('Generate PDFs instead of sending e-mails.')
         );
-        $generatePdfChechbox->freeze(); // TODO: Unfreeze as soon as the PDF launcher is implemented.
+        //$generatePdfChechbox->freeze(); // TODO: Unfreeze as soon as the PDF launcher is implemented.
 
         $templates = $this->getMessageTemplates();
         $this->add(
@@ -238,10 +241,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         // Forward back to the search:
         $targetUrl = html_entity_decode(CRM_Core_Session::singleton()->readUserContext());
 
-
         if ($shallBePdfs) {
-            //CRM_Eventinvitation_Queue_Runner_Launcher::launchPdfGenerator($runnerData, $targetUrl);
-            // TODO: Uncomment as soon as the PDF launcher is implemented.
+            CRM_Eventinvitation_Queue_Runner_Launcher::launchPdfGenerator($runnerData, $targetUrl);
         } else {
             CRM_Eventinvitation_Queue_Runner_Launcher::launchEmailSender($runnerData, $emailSender, $targetUrl);
         }

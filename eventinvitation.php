@@ -1,6 +1,7 @@
 <?php
 
 require_once 'eventinvitation.civix.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
