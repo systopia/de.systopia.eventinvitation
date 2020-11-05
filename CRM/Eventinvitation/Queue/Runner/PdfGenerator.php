@@ -15,7 +15,6 @@
 +-------------------------------------------------------*/
 
 use CRM_Eventinvitation_ExtensionUtil as E;
-use chillerlan\QRCode\QRCode;
 
 class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_Queue_Runner_Job
 {
@@ -39,20 +38,6 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
      */
     protected function processContact($contactId, $templateTokens)
     {
-        // add qr_code token
-        if (!empty($templateTokens[CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN])) {
-            try {
-                $link = $templateTokens[CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN];
-                $qr_code = new QRCode();
-                $qr_code_data = $qr_code->render($link);
-                $qr_code_alt_text = E::ts("Registration QR Code");
-                $templateTokens[CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN_QR_DATA] = $qr_code_data;
-                $templateTokens[CRM_Eventinvitation_Form_Task_ContactSearch::TEMPLATE_CODE_TOKEN_QR_IMG] = "<img alt=\"{$qr_code_alt_text}\" src=\"{$qr_code_data}\"/>";
-            } catch (Exception $ex) {
-                Civi::log()->warning("Couldn't render QR code: " . $ex->getMessage());
-            }
-        }
-
         // get the template
         static $template = null;
         if ($template === null) {
