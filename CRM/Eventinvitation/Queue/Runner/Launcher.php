@@ -89,8 +89,6 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
         $temp_folder = tempnam(sys_get_temp_dir(),'eventinvitation_pdf_generator_');
         if (file_exists($temp_folder)) { unlink($temp_folder); }
         mkdir($temp_folder);
-        // todo: remove
-        $temp_folder = '/home/bjoern/tmp';
         $runnerData->temp_dir = $temp_folder;
 
         // create a runner queue
@@ -120,14 +118,14 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
         }
 
         // create the link to the download screen
-        $return_link = CRM_Core_Session::singleton()->readUserContext();
-        $download_link = CRM_Utils_System::url('civicrm/eventinvitation/pdf', "folder={$temp_folder}&return={$return_link}");
+        $return_link = base64_encode(CRM_Core_Session::singleton()->readUserContext());
+        $download_link = CRM_Utils_System::url('civicrm/eventinvitation/download', "tmp_folder={$temp_folder}&return_url={$return_link}");
         $runner = new CRM_Queue_Runner(
             [
                 'title' => E::ts('Generating PDFs.'),
                 'queue' => $queue,
                 'errorMode' => CRM_Queue_Runner::ERROR_ABORT,
-                'onEndUrl' => $download_link,$download_link
+                'onEndUrl' => $download_link,
             ]
         );
 
