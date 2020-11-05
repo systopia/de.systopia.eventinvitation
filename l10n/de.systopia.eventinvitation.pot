@@ -5,11 +5,31 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2020-10-30 19:04+0100\n"
+"POT-Creation-Date: 2020-11-05 12:03+0100\n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Your Invitation PDFs are ready for download."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Download"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Back to Search"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Error downloading PDF files: %1"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Download Error"
+msgstr ""
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Invalid or expired invite code"
@@ -95,8 +115,12 @@ msgid ""
 "invitation URL."
 msgstr ""
 
-#: CRM/Eventinvitation/Queue/Runner/EmailSender.php
-msgid "Sending e-mails %1 to %2."
+#: CRM/Eventinvitation/Queue/Runner/Job.php
+msgid "Processing contacts %1 to %2."
+msgstr ""
+
+#: CRM/Eventinvitation/Queue/Runner/Job.php
+msgid "Registration QR Code"
 msgstr ""
 
 #: CRM/Eventinvitation/Queue/Runner/Launcher.php
@@ -108,7 +132,7 @@ msgid "Generating PDFs."
 msgstr ""
 
 #: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "Generating documents %1 to %2."
+msgid "Invitation-%1.pdf"
 msgstr ""
 
 #: CRM/Eventinvitation/Upgrader/Base.php
@@ -133,4 +157,38 @@ msgid ""
 "You can provide a custom URL to link to another registration endpoint. The "
 "URL must start with 'http://' or 'https://' and contain the the placeholder "
 "<code>&lbrace;token&rbrace;</code>."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"The template chosen here <strong>must</strong> contain the <code>&#123;"
+"$qr_event_invite_code&#125;</code> token. It contains the personalised "
+"invitation link."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid "Beyond that, the following special tokens are available:"
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$event.xxx&#125;</code>: fields of the given event. For the "
+"available 'xxx' field names, check the API explorer with <code>Event.get</"
+"code>."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$qr_event_invite_code_data&#125;</code>: QR-Code date to be used "
+"in as <code>src</code> in an html <code>img</code> tag."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$qr_event_invite_code_img&#125;</code>: QR-Code <code>img</code> "
+"element."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid "Template Help"
 msgstr ""

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2020-10-30 19:04+0100\n"
+"POT-Creation-Date: 2020-11-05 12:03+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
@@ -15,6 +15,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Your Invitation PDFs are ready for download."
+msgstr "Ihre PDF Einladungen stehen bereit zum Herunterladen."
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Download"
+msgstr "Herunterladen"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Back to Search"
+msgstr "Zurück zum Suchergebnis)"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Error downloading PDF files: %1"
+msgstr "Fehler beim Herunterladen der PDF Dateien: %1"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Download Error"
+msgstr "Download Fehler"
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Invalid or expired invite code"
@@ -104,9 +124,13 @@ msgid ""
 msgstr ""
 "Die Vorlage enthält den Token <code>%1</code> für den Einladungslink nicht."
 
-#: CRM/Eventinvitation/Queue/Runner/EmailSender.php
-msgid "Sending e-mails %1 to %2."
-msgstr "Versende E-Mails %1 bis %2."
+#: CRM/Eventinvitation/Queue/Runner/Job.php
+msgid "Processing contacts %1 to %2."
+msgstr "Verarbeite Kontakte %1 bis %2."
+
+#: CRM/Eventinvitation/Queue/Runner/Job.php
+msgid "Registration QR Code"
+msgstr "QR Code für die Anmeldung"
 
 #: CRM/Eventinvitation/Queue/Runner/Launcher.php
 msgid "Sending e-mails."
@@ -117,8 +141,8 @@ msgid "Generating PDFs."
 msgstr "Erstelle PDFs."
 
 #: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "Generating documents %1 to %2."
-msgstr "Erstelle Dokumenete %1 bis %2."
+msgid "Invitation-%1.pdf"
+msgstr ""
 
 #: CRM/Eventinvitation/Upgrader/Base.php
 msgid "Upgrade %1 to revision %2"
@@ -148,6 +172,54 @@ msgstr ""
 "Sie können hier einen alternativen Link zu einer Registrierungsseite "
 "angeben. Die URL muss mit 'http://' oder 'https://' beginnen, und den "
 "Platzhalter <code>&lbrace;token&rbrace;</code> beinhalten."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"The template chosen here <strong>must</strong> contain the <code>&#123;"
+"$qr_event_invite_code&#125;</code> token. It contains the personalised "
+"invitation link."
+msgstr ""
+"Die gewählte Vorlage <strong>muss</strong> den Token <code>&#123;"
+"$qr_event_invite_code&#125;</code> enthalten. Dieser enthält den "
+"personalisierten Link."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid "Beyond that, the following special tokens are available:"
+msgstr "Darüber hinaus sind die folgenden Zusatztoken verfügbar."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$event.xxx&#125;</code>: fields of the given event. For the "
+"available 'xxx' field names, check the API explorer with <code>Event.get</"
+"code>."
+msgstr ""
+"<code>&#123;$event.xxx&#125;</code>: Informationen der Veranstaltung. Eine "
+"List der verfügbaren 'xxx' Felder können Sie über den API Explorer über "
+"<code>Event.get</code> erhalten."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$qr_event_invite_code_data&#125;</code>: QR-Code date to be used "
+"in as <code>src</code> in an html <code>img</code> tag."
+msgstr ""
+"<code>&#123;$qr_event_invite_code_data&#125;</code>: QR-Code Daten, die als "
+"<code>src</code> Feld ein einem HTML <code>img</code> Tag verwendet werden "
+"können."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
+msgid ""
+"<code>&#123;$qr_event_invite_code_img&#125;</code>: QR-Code <code>img</code> "
+"element."
+msgstr ""
+"<code>&#123;$qr_event_invite_code_img&#125;</code>: QR-Code als HTML "
+"<code>img</code> Element."
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid "Template Help"
+msgstr "Hilfe zur Vorlage"
+
+#~ msgid "Sending e-mails %1 to %2."
+#~ msgstr "Versende E-Mails %1 bis %2."
 
 #~ msgid ""
 #~ "You can provide a custom URL (beginning with 'http://' or 'https://' to "
