@@ -150,7 +150,7 @@ msgstr ""
 
 #: CRM/Eventinvitation/Upgrader.php
 msgid "Invited"
-msgstr "Eingeladen"
+msgstr "eingeladen"
 
 #: eventinvitation.php
 msgid "Invite to event"
