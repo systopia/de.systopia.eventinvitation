@@ -24,7 +24,8 @@
         <div class="clear"></div>
     </div>
     <div class="crm-section">
-        <div class="label">{$form.template.label}</div>
+        {capture assign=label_help}{ts}Template Help{/ts}{/capture}
+        <div class="label">{$form.template.label}{help id="id-template-tokens" title=$label_help}</div>
         <div class="content">{$form.template.html}</div>
         <div class="clear"></div>
     </div>
