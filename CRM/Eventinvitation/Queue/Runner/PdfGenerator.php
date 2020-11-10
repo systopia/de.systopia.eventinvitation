@@ -38,7 +38,7 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
      */
     protected function processContact($contactId, $templateTokens)
     {
-        // get the template
+        // get the template (once per batch)
         static $template = null;
         if ($template === null) {
             // fetch template
@@ -48,12 +48,28 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
             ]);
         }
 
-        // render: first generate HTML
+        // get the token values (once per batch)
+        static $token_values = null;
+        static $tokens = null;
+        if ($token_values === null) {
+            $tokens = CRM_Utils_Token::getTokens($template['msg_html']);
+            $token_values = CRM_Utils_Token::getTokenDetails(
+                $this->runnerData->contactIds,
+                [],NULL, NULL, FALSE,
+                $tokens
+            );
+        }
+
+        // RENDER: replace tokens in HTML
+        $template_html = $template['msg_html'];
+        $template_html = CRM_Utils_Token::replaceContactTokens($template_html, $token_values[0][$contactId], FALSE, $tokens, FALSE, TRUE);
+
+        // RENDER: replace variables in HTML
         $smarty = CRM_Core_Smarty::singleton();
         $smarty->assignAll($templateTokens);
-        $html = $smarty->fetch('string:' . $template['msg_html']);
+        $html = $smarty->fetch('string:' . $template_html);
 
-        // then create pdf file
+        // RENDER: generate PDF
         $pdf_filename    = E::ts("Invitation-%1.pdf", [1 => $contactId]);
         $pf_invoice_pdf  = CRM_Utils_PDF_Utils::html2pdf($html, $pdf_filename, TRUE, $template['pdf_format_id']);
         file_put_contents($this->runnerData->temp_dir . DIRECTORY_SEPARATOR . $pdf_filename, $pf_invoice_pdf);
