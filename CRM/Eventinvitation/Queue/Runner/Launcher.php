@@ -21,8 +21,8 @@ use CRM_Eventinvitation_ExtensionUtil as E;
  */
 abstract class CRM_Eventinvitation_Queue_Runner_Launcher
 {
-    const EMAIL_BATCH_SIZE = 40; // TODO: What is a good size?
-    const PDF_BATCH_SIZE = 20; // TODO: What is a good size?
+    const EMAIL_BATCH_SIZE = 20;
+    const PDF_BATCH_SIZE = 20;
 
     /**
      * Launch the runner for the e-mail sender.

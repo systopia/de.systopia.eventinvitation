@@ -19,6 +19,12 @@
         <div class="clear"></div>
     </div>
     <div class="crm-section">
+        {capture assign=label_help}{ts}Template Help{/ts}{/capture}
+        <div class="label">{$form.template.label}{help id="id-template-tokens" title=$label_help}</div>
+        <div class="content">{$form.template.html}</div>
+        <div class="clear"></div>
+    </div>
+    <div class="crm-section">
         <div class="label">{$form.pdfs_instead_of_emails.label}</div>
         <div class="content">{$form.pdfs_instead_of_emails.html}</div>
         <div class="clear"></div>
@@ -26,12 +32,6 @@
     <div class="crm-section">
         <div class="label">{$form.email_sender.label}</div>
         <div class="content">{$form.email_sender.html}</div>
-        <div class="clear"></div>
-    </div>
-    <div class="crm-section">
-        {capture assign=label_help}{ts}Template Help{/ts}{/capture}
-        <div class="label">{$form.template.label}{help id="id-template-tokens" title=$label_help}</div>
-        <div class="content">{$form.template.html}</div>
         <div class="clear"></div>
     </div>
     <div class="crm-section">

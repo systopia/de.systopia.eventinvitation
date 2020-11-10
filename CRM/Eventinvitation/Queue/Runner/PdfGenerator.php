@@ -34,7 +34,7 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
      * @param array $templateTokens
      *   tokens
      *
-     * @throws \CiviCRM_API3_Exception
+     * @throws \Exception
      */
     protected function processContact($contactId, $templateTokens)
     {
@@ -65,13 +65,19 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
         $template_html = CRM_Utils_Token::replaceContactTokens($template_html, $token_values[0][$contactId], FALSE, $tokens, FALSE, TRUE);
 
         // RENDER: replace variables in HTML
-        $smarty = CRM_Core_Smarty::singleton();
-        $smarty->assignAll($templateTokens);
-        $html = $smarty->fetch('string:' . $template_html);
+        try {
+            $smarty = CRM_Core_Smarty::singleton();
+            $smarty->assignAll($templateTokens);
+            $html = $smarty->fetch('string:' . $template_html);
 
-        // RENDER: generate PDF
-        $pdf_filename    = E::ts("Invitation-%1.pdf", [1 => $contactId]);
-        $pf_invoice_pdf  = CRM_Utils_PDF_Utils::html2pdf($html, $pdf_filename, TRUE, $template['pdf_format_id']);
-        file_put_contents($this->runnerData->temp_dir . DIRECTORY_SEPARATOR . $pdf_filename, $pf_invoice_pdf);
+            // RENDER: generate PDF
+            $pdf_filename    = E::ts("Invitation-%1.pdf", [1 => $contactId]);
+            $pf_invoice_pdf  = CRM_Utils_PDF_Utils::html2pdf($html, $pdf_filename, TRUE, $template['pdf_format_id']);
+            file_put_contents($this->runnerData->temp_dir . DIRECTORY_SEPARATOR . $pdf_filename, $pf_invoice_pdf);
+        } catch (Exception $ex) {
+            // exceptions in this part shouldn't only go to the logs
+            CRM_Core_Session::setStatus($ex->getMessage(), E::ts("PDF Generation Failed"), 'warn');
+            throw $ex;
+        }
     }
 }
