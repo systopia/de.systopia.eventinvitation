@@ -59,7 +59,6 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME,
             E::ts('Generate PDFs instead of sending e-mails.')
         );
-        //$generatePdfChechbox->freeze(); // TODO: Unfreeze as soon as the PDF launcher is implemented.
 
         $templates = $this->getMessageTemplates();
         $this->add(
