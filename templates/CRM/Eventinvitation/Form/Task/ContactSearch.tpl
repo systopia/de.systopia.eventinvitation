@@ -19,13 +19,14 @@
         <div class="clear"></div>
     </div>
     <div class="crm-section">
-        <div class="label">{$form.pdfs_instead_of_emails.label}</div>
-        <div class="content">{$form.pdfs_instead_of_emails.html}</div>
+        {capture assign=label_help}{ts}Template Help{/ts}{/capture}
+        <div class="label">{$form.template.label}{help id="id-template-tokens" title=$label_help}</div>
+        <div class="content">{$form.template.html}</div>
         <div class="clear"></div>
     </div>
     <div class="crm-section">
-        <div class="label">{$form.template.label}</div>
-        <div class="content">{$form.template.html}</div>
+        <div class="label">{$form.pdfs_instead_of_emails.label}</div>
+        <div class="content">{$form.pdfs_instead_of_emails.html}</div>
         <div class="clear"></div>
     </div>
     <div class="crm-section">
@@ -45,3 +46,20 @@
         {include file="CRM/common/formButtons.tpl" location="bottom"}
     </div>
 {/crmScope}
+
+<script>
+{literal}
+cj(document).ready(function() {
+  // simple script to hide 'email sender' field when generating pdfs
+  function eventInvitation_hideSenderField() {
+    if (cj("input[name=pdfs_instead_of_emails]").prop('checked')) {
+      cj("#email_sender").parent().parent().hide();
+    } else {
+      cj("#email_sender").parent().parent().show();
+    }
+  }
+  cj("input[name=pdfs_instead_of_emails]").change(eventInvitation_hideSenderField);
+  eventInvitation_hideSenderField();
+});
+{/literal}
+</script>

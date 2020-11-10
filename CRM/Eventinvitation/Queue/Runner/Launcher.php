@@ -21,11 +21,12 @@ use CRM_Eventinvitation_ExtensionUtil as E;
  */
 abstract class CRM_Eventinvitation_Queue_Runner_Launcher
 {
-    const EMAIL_BATCH_SIZE = 40; // TODO: What is a good size?
-    const PDF_BATCH_SIZE = 20; // TODO: What is a good size?
+    const EMAIL_BATCH_SIZE = 20;
+    const PDF_BATCH_SIZE = 20;
 
     /**
      * Launch the runner for the e-mail sender.
+     *
      * @param CRM_Eventinvitation_Object_RunnerData $runnerData
      * @param string $emailSender
      * @param string $targetUrl The URL we shall redirect after the runner has been finished.
@@ -35,7 +36,6 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
         string $emailSender,
         string $targetUrl
     ): void {
-        // TODO: Could the two launch methods share some code that is the same? Via a third method maybe?
 
         $queue = CRM_Queue_Service::singleton()->create(
             [
@@ -75,15 +75,23 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
     }
 
     /**
-     * Launch the runner for the PDF generation.
-     * @param string[] $contactIds
-     * @param string $template
+     * Launch the runner for the PDF Generator
+     *
+     * @param CRM_Eventinvitation_Object_RunnerData $runnerData
      * @param string $targetUrl The URL we shall redirect after the runner has been finished.
      */
-    public static function launchPdfGenerator(array $contactIds, string $template, string $targetUrl): void
-    {
-        // FIXME: This is not properly implemented!
+    public static function launchPdfGenerator(
+        CRM_Eventinvitation_Object_RunnerData $runnerData,
+        string $targetUrl
+    ): void {
 
+        // create a tmp folder to generate the PDFs in
+        $temp_folder = tempnam(sys_get_temp_dir(),'eventinvitation_pdf_generator_');
+        if (file_exists($temp_folder)) { unlink($temp_folder); }
+        mkdir($temp_folder);
+        $runnerData->temp_dir = $temp_folder;
+
+        // create a runner queue
         $queue = CRM_Queue_Service::singleton()->create(
             [
                 'type' => 'Sql',
@@ -92,27 +100,32 @@ abstract class CRM_Eventinvitation_Queue_Runner_Launcher
             ]
         );
 
-        $dataCount = count($contactIds);
+        // fill the runner queue
+        $dataCount = count($runnerData->contactIds);
 
-        for ($offset = 0; $offset < $dataCount; $offset += self::PDF_BATCH_SIZE) {
-            $batchedContactIds = array_slice($contactIds, $offset, self::PDF_BATCH_SIZE);
+        for ($offset = 0; $offset < $dataCount; $offset += self::EMAIL_BATCH_SIZE) {
+            $batchedContactIds = array_slice($runnerData->contactIds, $offset, self::EMAIL_BATCH_SIZE);
+
+            $batchedRunnerData = new CRM_Eventinvitation_Object_RunnerData($runnerData->toArray());
+            $batchedRunnerData->contactIds = $batchedContactIds;
 
             $queue->createItem(
                 new CRM_Eventinvitation_Queue_Runner_PdfGenerator(
-                    $batchedContactIds,
-                    $template,
-                    $offset,
-                    self::PDF_BATCH_SIZE
+                    $batchedRunnerData,
+                    $offset
                 )
             );
         }
 
+        // create the link to the download screen
+        $return_link = base64_encode(CRM_Core_Session::singleton()->readUserContext());
+        $download_link = CRM_Utils_System::url('civicrm/eventinvitation/download', "tmp_folder={$temp_folder}&return_url={$return_link}");
         $runner = new CRM_Queue_Runner(
             [
                 'title' => E::ts('Generating PDFs.'),
                 'queue' => $queue,
                 'errorMode' => CRM_Queue_Runner::ERROR_ABORT,
-                'onEndUrl' => $targetUrl,
+                'onEndUrl' => $download_link,
             ]
         );
 

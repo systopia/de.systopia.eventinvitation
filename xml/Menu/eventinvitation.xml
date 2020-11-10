@@ -1,20 +1,26 @@
 <?xml version="1.0"?>
 <menu>
-    <!-- Settings -->
-    <item>
-        <path>civicrm/eventinvitation/settings</path>
-        <page_callback>CRM_Eventinvitation_Form_Settings</page_callback>
-        <title>Event Invitation Configuration</title>
-        <desc>Allows you to explicitly invite your contacts to an event.</desc>
-        <access_arguments>administer CiviCRM</access_arguments>
-        <adminGroup>Communications</adminGroup>
-        <icon>admin/small/rela_type.png</icon>
-    </item>
-    <!-- Forms -->
-    <item>
-        <path>civicrm/eventinvitation/register</path>
-        <page_callback>CRM_Eventinvitation_Form_Register</page_callback>
-        <title>Event Invitation Registering</title>
-        <access_arguments>*always allow*</access_arguments>
-    </item>
+  <!-- Settings -->
+  <item>
+    <path>civicrm/eventinvitation/settings</path>
+    <page_callback>CRM_Eventinvitation_Form_Settings</page_callback>
+    <title>Event Invitation Configuration</title>
+    <desc>Allows you to explicitly invite your contacts to an event.</desc>
+    <access_arguments>administer CiviCRM</access_arguments>
+    <adminGroup>Communications</adminGroup>
+    <icon>admin/small/rela_type.png</icon>
+  </item>
+  <!-- Forms -->
+  <item>
+    <path>civicrm/eventinvitation/register</path>
+    <page_callback>CRM_Eventinvitation_Form_Register</page_callback>
+    <title>Event Invitation Registering</title>
+    <access_arguments>*always allow*</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/eventinvitation/download</path>
+    <page_callback>CRM_Eventinvitation_Form_Download</page_callback>
+    <title>Download</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>
