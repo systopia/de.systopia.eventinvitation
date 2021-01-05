@@ -129,8 +129,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         }
 
         if (!$this->templateHasCodeToken($templateId)) {
-            $this->_errors[self::TEMPLATE_ELEMENT_NAME] = E::ts("The given template doesn't contain the token <code>%1</code> for the invitation URL.",
-                [1 => '{$' . self::TEMPLATE_CODE_TOKEN . '}']);
+            $this->_errors[self::TEMPLATE_ELEMENT_NAME] =
+                E::ts("The given template doesn't contain any of the code tokens for the invitation URL.");
         }
 
         parent::validate();
@@ -187,6 +187,18 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         return $non_invite_participant_count > 0;
     }
 
+    /**
+     * Check if the provided template ID contains at least on of
+     *  the code tokens in either msg_text or msg_html
+     *
+     * @param integer $templateId
+     *   the template ID
+     *
+     * @return bool
+     *   true if the template contains one of the tokens
+     *
+     * @throws \CiviCRM_API3_Exception
+     */
     private function templateHasCodeToken(string $templateId): bool
     {
         $template = civicrm_api3(
@@ -198,16 +210,21 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             ]
         );
 
-        // check both type for the token, if present
-        $token = '{$' . self::TEMPLATE_CODE_TOKEN . '}';
-        $has_token = true;
-        foreach (['msg_text', 'msg_html'] as $type) {
-            if (!empty($template[$type])) {
-                $has_token &= (strpos($template[$type], $token) !== false);
+        // check if any of the tokens are present
+        $tokens = [self::TEMPLATE_CODE_TOKEN, self::TEMPLATE_CODE_TOKEN_QR_DATA, self::TEMPLATE_CODE_TOKEN_QR_IMG];
+        foreach ($tokens as $token) {
+            $token_string = '{$' . self::TEMPLATE_CODE_TOKEN . '}';
+            foreach (['msg_text', 'msg_html'] as $type) {
+                if (!empty($template[$type])) {
+                    if (strpos($template[$type], $token_string) !== false) {
+                        return true;
+                    }
+                }
             }
         }
 
-        return $has_token;
+        // none of the tokens could be found in the template
+        return false;
     }
 
     public function postProcess()
