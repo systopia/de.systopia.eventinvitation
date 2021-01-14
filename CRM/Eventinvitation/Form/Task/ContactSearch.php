@@ -213,7 +213,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         // check if any of the tokens are present
         $tokens = [self::TEMPLATE_CODE_TOKEN, self::TEMPLATE_CODE_TOKEN_QR_DATA, self::TEMPLATE_CODE_TOKEN_QR_IMG];
         foreach ($tokens as $token) {
-            $token_string = '{$' . self::TEMPLATE_CODE_TOKEN . '}';
+            $token_string = '{$' . $token . '}';
             foreach (['msg_text', 'msg_html'] as $type) {
                 if (!empty($template[$type])) {
                     if (strpos($template[$type], $token_string) !== false) {
