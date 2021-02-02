@@ -79,9 +79,20 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
                 }
                 $zip->close();
 
-                // offer download
-                $data = file_get_contents($filename);
-                CRM_Utils_System::download("Invitations.zip", 'application/zip', $data);
+                // trigger download
+                if (file_exists($filename)) {
+                    // set file metadata
+                    header('Content-Type: application/zip');
+                    header("Content-Disposition: attachment; filename=" . E::ts("Invitations.zip"));
+
+                    // dump file contents in stream and exit
+                    readfile($filename);
+                    CRM_Utils_System::civiExit();
+
+                } else {
+                    // this file really should exist...
+                    throw new Exception(E::ts("ZIP file couldn't be generated. Contact the author."));
+                }
 
             } catch (Exception $ex) {
                 CRM_Core_Session::setStatus(
