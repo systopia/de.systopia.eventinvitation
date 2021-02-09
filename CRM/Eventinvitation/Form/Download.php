@@ -62,22 +62,41 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
             }
 
             // download PDFs
-
-
             // todo: verify folder
             try {
                 // create ZIP file
-                $zip = new ZipArchive();
                 $filename = $this->tmp_folder . DIRECTORY_SEPARATOR . 'all.zip';
-                $zip->open($filename, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
 
-                // add all Invitation-X.pdf files
-                foreach (scandir($this->tmp_folder) as $file) {
-                    if (preg_match('/Invitation-[0-9]+.pdf/', $file)) {
-                        $zip->addFile($this->tmp_folder . DIRECTORY_SEPARATOR . $file, $file);
-                    }
+                // first: try with command line tool to avoid memory issues
+                $has_error = 0;
+                try {
+                    $output = null;
+                    $pattern = E::ts("Invitation-%1.pdf", [1 => '*']);
+                    $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
+                    Civi::log()->debug("EventInvitation executing '{$command}' to zip generated pdfs...");
+                    $timestamp = microtime(true);
+                    exec($command, $output, $has_error);
+                    $runtime = microtime(true) - $timestamp;
+                    Civi::log()->debug("EventInvitation zip command took {$runtime}s");
+                } catch (Exception $ex) {
+                    $has_error = 1;
                 }
-                $zip->close();
+
+                // if this didn't work, use PHP (memory intensive)
+                if ($has_error || !file_exists($filename)) {
+                    // this didn't work, use the
+                    $zip = new ZipArchive();
+                    $zip->open($filename, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
+
+                    // add all Invitation-X.pdf files
+                    foreach (scandir($this->tmp_folder) as $file) {
+                        $pattern = E::ts("Invitation-%1.pdf", [1 => '[0-9]+']);
+                        if (preg_match("/{$pattern}/", $file)) {
+                            $zip->addFile($this->tmp_folder . DIRECTORY_SEPARATOR . $file, $file);
+                        }
+                    }
+                    $zip->close();
+                }
 
                 // trigger download
                 if (file_exists($filename)) {
