@@ -103,6 +103,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
                     // set file metadata
                     header('Content-Type: application/zip');
                     header("Content-Disposition: attachment; filename=" . E::ts("Invitations.zip"));
+                    header('Content-Length: ' . filesize($filename));
 
                     // dump file contents in stream and exit
                     // caution: big files need to be treated carefully, to not cause out of memory errors
