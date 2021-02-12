@@ -105,7 +105,27 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
                     header("Content-Disposition: attachment; filename=" . E::ts("Invitations.zip"));
 
                     // dump file contents in stream and exit
-                    readfile($filename);
+                    // caution: big files need to be treated carefully, to not cause out of memory errors
+                    // based on: https://zinoui.com/blog/download-large-files-with-php
+
+                    // first: disable output buffering
+                    if (ob_get_level()) ob_end_clean();
+
+                    // then read the file chunk by chunk and write to output (echo)
+                    $chunkSize = 16 * 1024 * 1024; // 16 MB chunks
+                    $handle = fopen($filename, 'rb');
+                    while (!feof($handle)) {
+                        $buffer = fread($handle, $chunkSize);
+                        echo $buffer;
+                        ob_flush();
+                        flush();
+                    }
+                    fclose($handle);
+
+                    // delete the zip file
+                    unlink($filename);
+
+                    // we're done
                     CRM_Utils_System::civiExit();
 
                 } else {
