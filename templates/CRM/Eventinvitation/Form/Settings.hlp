@@ -14,12 +14,15 @@
 
 {crmScope extensionKey='de.systopia.eventinvitation'}
 
-{htxt id='id-link-target-enabled'}
-  <p>{ts}Activate using a custom target link. Otherwise the build-in page is used.{/ts}</p>
+{htxt id='id-external_link'}
+  <p>{ts}You can add a link here, to use an external checkin page, rather than the built-in one.{/ts}</p>
+  <p>{ts}The link <strong>has to</strong> contain the <code>&#123;token&#125;</code> which will be replaced wit the generated code.{/ts}</p>
 {/htxt}
 
-{htxt id='id-link-target'}
-  <p>{ts}You can provide a custom URL to link to another registration endpoint. The URL must start with 'http://' or 'https://' and contain the the placeholder <code>&lbrace;token&rbrace;</code>.{/ts}</p>
+{htxt id='id-token-timeout'}
+  <p>{ts}Here you can define, until when the token should be valid.{/ts}</p>
+  <p>{ts}After the event has ended, none of the tokens will be valid any more, regardless of this setting.{/ts}</p>
+  <p>{ts}Keep in mind that this is encoded in the token itself, so changing this setting will only affect newly generated tokens.{/ts}</p>
 {/htxt}
 
 {/crmScope}
