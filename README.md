@@ -41,16 +41,17 @@ to generate QR codes.
 
 ## Configuration
 
-Find the extension's settings under >>Administer >>Administration Console >>
-Event Invitation Configuration (/civicrm/eventinvitation/settings?reset=1) and
+Find the extension's settings under → Administer → Administration Console →
+Event Invitation Configuration (`/civicrm/eventinvitation/settings?reset=1`) and
 provide information on the enpoint, if you want to use one.
 
-Create at least one message template that contains one of the following token:
+Create at least one message template that contains one of the following Smarty
+variables:
 
-* {$qr_event_invite_code} - generates a unique link for the participant
-* {$qr_event_invite_code_img} - generates a unique link for the participant
+* `{$qr_event_invite_code}` - generates a unique link for the participant
+* `{$qr_event_invite_code_img}` - generates a unique link for the participant
   presented as an QR Code with fixed width
-* {$qr_event_invite_code_data} - generates a unique link for the participant
+* `{$qr_event_invite_code_data}` - generates a unique link for the participant
   presented as an QR Code that can be html formatted as an image
 
 ### Using a Drupal endpoint
@@ -62,8 +63,8 @@ custom url.
 
 On your public Drupal system,
 install [CiviRemote](https://github.com/systopia/civiremote), add a CiviRemote
-profile (/admin/config/cmrf/profiles) and connector (
-/admin/config/cmrf/connectors) if you have not done so yet.
+profile (`/admin/config/cmrf/profiles`) and
+connector (`/admin/config/cmrf/connectors`) if you have not done so yet.
 
 ## Usage
 
@@ -100,5 +101,6 @@ The built in feedback form ist stilll very basic and limited in it's
 functionality so, unless you want to extend the built in form yourself or would
 be ready to fund some development to extend it's features we would encourage you
 to generate an external landing page / endpoint for the form. For Drupal you
-will most likely want to use the CiviRemote Drupal module which includes a lot
-of pre-built features (https://github.com/systopia/civiremote).
+will most likely want to use
+the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
+includes a lot of pre-built features.
