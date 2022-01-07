@@ -58,7 +58,7 @@ variables:
 
 If you are using a Drupal endpoint based on CiviRemote, visit the extension's
 settings page, tickt the custom URL box and
-enter https://yourpublicfrontend.org/civiremote/event/register/{token} as the
+enter `https://yourpublicfrontend.org/civiremote/event/register/{token}` as the
 custom url.
 
 On your public Drupal system,
