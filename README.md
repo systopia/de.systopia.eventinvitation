@@ -15,7 +15,8 @@ likely want to use
 the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
 includes a lot of pre-built features.
 
-This extension is licensed under [AGPL-3.0](LICENSE.txt).
+This extension is licensed
+under [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0).
 
 ## Features
 
@@ -28,7 +29,7 @@ This extension is licensed under [AGPL-3.0](LICENSE.txt).
 ## Requirements
 
 * PHP v7.0+
-* CiviCRM 5.3
+* CiviCRM 5.3+
 
 Recommended:
 
