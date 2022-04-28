@@ -54,6 +54,32 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             true
         );
 
+        // If de.systopia.resourceevent is installed, allow inviting as resource by selecting a resource demand.
+        $manager = CRM_Extension_System::singleton()->getManager();
+        if ($manager->getStatus('de.systopia.resourceevent') === CRM_Extension_Manager::STATUS_INSTALLED) {
+            // Add field for selecting resource demand.
+            $this->addEntityRef(
+                'resource_demand_id',
+                E::ts('Resource Demand'),
+                [
+                    'entity' => 'ResourceDemand',
+                    'api' => [
+                        'params' => [
+                            'entity_table' => 'civicrm_event',
+                            'limit' => 0,
+                        ]
+                    ]
+                ]
+            );
+            Civi::resources()->addScriptFile(
+                E::LONG_NAME,
+                'js/invite-resource.js'
+            );
+            $resource_role = Civi\Resourceevent\Utils::getResourceRole(TRUE);
+            $this->assign('resource_role_label', reset($resource_role));
+            Civi::resources()->addVars(E::SHORT_NAME, ['resource_role_id' => key($resource_role)]);
+        }
+
         $generatePdfChechbox = $this->add(
             'checkbox',
             self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME,
@@ -107,6 +133,38 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
     public function validate()
     {
         $values = $this->exportValues(null, true); // TODO: Should this be $this->_submitValues['x'] instead?
+
+        $manager = CRM_Extension_System::singleton()->getManager();
+        if ($manager->getStatus('de.systopia.resourceevent') === CRM_Extension_Manager::STATUS_INSTALLED) {
+            // Validate invitations as resource for correct combinations of field values.
+            $resource_role = Civi\Resourceevent\Utils::getResourceRole(TRUE);
+            if (
+                $values[self::PARTICIPANT_ROLES_ELEMENT_NAME] == key($resource_role)
+                && empty($values['resource_demand_id'])
+            ) {
+                $this->_errors['resource_demand_id'] = E::ts('A resource demand is mandatory when inviting contacts as resources.');
+            }
+            if (
+                !empty($values['resource_demand_id'])
+                && $values[self::PARTICIPANT_ROLES_ELEMENT_NAME] != key($resource_role)
+            ) {
+                $this->_errors[self::PARTICIPANT_ROLES_ELEMENT_NAME] = E::ts(
+                    'Select the role %1 for inviting contacts as resources.',
+                    [1 => reset($resource_role)]
+                );
+            }
+            if (
+                !empty($values['resource_demand_id'])
+                && $values['event'] != \Civi\Api4\ResourceDemand::get(FALSE)
+                ->addSelect('entity_id')
+                ->addWhere('entity_table', '=', 'civicrm_event')
+                ->addWhere('id', '=', $values['resource_demand_id'])
+                ->execute()
+                ->single()['entity_id']
+            ) {
+                $this->_errors['resource_demand_id'] = E::ts('The resource demand does not belong to the selected event.');
+            }
+        }
 
         $shallBePdfs = false;
 
@@ -252,6 +310,9 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $runnerData->contactIds = $this->_contactIds;
         $runnerData->eventId = $values[self::EVENT_ELEMENT_NAME];
         $runnerData->participantRoleId = $values[self::PARTICIPANT_ROLES_ELEMENT_NAME];
+        if (!empty($values['resource_demand_id'])) {
+            $runnerData->resourceDemandId = $values['resource_demand_id'];
+        }
         $runnerData->templateId = $values[self::TEMPLATE_ELEMENT_NAME];
 
         // Forward back to the search:

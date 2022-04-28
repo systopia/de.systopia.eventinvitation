@@ -60,7 +60,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
             $transaction = new CRM_Core_Transaction();
 
             try {
-                $participantId = $this->setParticipantToInvited($contactId);
+                $participantId = $this->setParticipantToInvited($contactId, $this->runnerData->resourceDemandId);
                 $templateTokens = $this->getTemplateTokens($participantId);
                 $this->processContact($contactId, $templateTokens);
             } catch (Exception $error) {
@@ -89,8 +89,9 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
      * @return int
      * @throws \CiviCRM_API3_Exception
      */
-    protected function setParticipantToInvited(string $contactId): int
+    protected function setParticipantToInvited(string $contactId, $resourceDemandId = null): int
     {
+        // TODO: Check for and pass $resourceDemandId for invitations as resource.
         // check if there is/are already existing participants
         $existing_participant = civicrm_api3(
             'Participant',
