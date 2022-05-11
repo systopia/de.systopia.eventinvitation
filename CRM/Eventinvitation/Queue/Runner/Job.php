@@ -60,7 +60,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
             $transaction = new CRM_Core_Transaction();
 
             try {
-                $participantId = $this->setParticipantToInvited($contactId, $this->runnerData->resourceDemandId);
+                $participantId = $this->setParticipantToInvited($contactId);
                 $templateTokens = $this->getTemplateTokens($participantId);
                 $this->processContact($contactId, $templateTokens);
             } catch (Exception $error) {
@@ -89,19 +89,23 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
      * @return int
      * @throws \CiviCRM_API3_Exception
      */
-    protected function setParticipantToInvited(string $contactId, $resourceDemandId = null): int
+    protected function setParticipantToInvited(string $contactId): int
     {
-        // TODO: Check for and pass $resourceDemandId for invitations as resource.
         // check if there is/are already existing participants
-        $existing_participant = civicrm_api3(
-            'Participant',
-            'get',
-            [
-                'event_id' => $this->runnerData->eventId,
-                'contact_id' => $contactId,
-                'option.limit' => 1,
-            ]
-        );
+        $existing_participant = \Civi\Api4\Participant::get(FALSE)
+            ->addWhere('event_id', '=', $this->runnerData->eventId)
+            ->addWhere('contact_id', '=', $contactId);
+        // When inviting as resources (de.systopia.resourceevent), filter for role and resource demand.
+        if (!empty($this->runnerData->resourceDemandId)) {
+            $existing_participant
+                ->addWhere(
+                    'role_id',
+                    'LIKE',
+                    '%' . implode(\CRM_Core_DAO::VALUE_SEPARATOR, [$this->runnerData->participantRoleId]) . '%'
+                )
+                ->addWhere('resource_information.resource_demand', '=', $this->runnerData->resourceDemandId);
+        }
+        $existing_participant = $existing_participant->execute()->first();
 
         if (!empty($existing_participant['id'])) {
             // there is one, use that!
@@ -109,17 +113,19 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
 
         } else {
             // if there isn't one: create
-            $queryResult = civicrm_api3(
-                'Participant',
-                'create',
-                [
-                    'event_id' => $this->runnerData->eventId,
-                    'contact_id' => $contactId,
-                    'status_id' => CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME,
-                    'role_id' => $this->runnerData->participantRoleId,
-                ]
-            );
-            return $queryResult['id'];
+            $new_participant = \Civi\Api4\Participant::create(FALSE)
+                ->addValue('event_id', $this->runnerData->eventId)
+                ->addValue('contact_id', $contactId)
+                ->addValue('status_id:name', CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME)
+                ->addValue('role_id', $this->runnerData->participantRoleId);
+            // When inviting as resource (de.systopia.resourceevent), add resource demand value.
+            if (!empty($this->runnerData->resourceDemandId)) {
+                $new_participant
+                    ->addValue('resource_information.resource_demand', $this->runnerData->resourceDemandId);
+            }
+            $new_participant = $new_participant->execute()->single();
+
+            return $new_participant['id'];
         }
     }
 
