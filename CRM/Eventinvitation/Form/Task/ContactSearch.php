@@ -66,6 +66,10 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
                     'api' => [
                         'params' => [
                             'entity_table' => 'civicrm_event',
+                            // Filter for contact resources only.
+                            'resource_type_id' => [
+                                'IN' => array_keys(CRM_Resource_Types::getForEntityTable('civicrm_contact'))
+                            ],
                             'limit' => 0,
                         ]
                     ]
