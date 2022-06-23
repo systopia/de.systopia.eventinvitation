@@ -14,6 +14,7 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*/
 
+use Civi\Api4\Participant;
 use CRM_Eventinvitation_ExtensionUtil as E;
 use chillerlan\QRCode\QRCode;
 
@@ -92,15 +93,20 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
     protected function setParticipantToInvited(string $contactId): int
     {
         // check if there is/are already existing participants
-        $existing_participant = civicrm_api3(
-            'Participant',
-            'get',
-            [
-                'event_id' => $this->runnerData->eventId,
-                'contact_id' => $contactId,
-                'option.limit' => 1,
-            ]
-        );
+        $existing_participant = Participant::get(FALSE)
+            ->addWhere('event_id', '=', $this->runnerData->eventId)
+            ->addWhere('contact_id', '=', $contactId);
+        // When inviting as resources (de.systopia.resourceevent), filter for role and resource demand.
+        if (!empty($this->runnerData->resourceDemandId)) {
+            $existing_participant
+                ->addWhere(
+                    'role_id',
+                    'LIKE',
+                    '%' . implode(\CRM_Core_DAO::VALUE_SEPARATOR, [$this->runnerData->participantRoleId]) . '%'
+                )
+                ->addWhere('resource_information.resource_demand', '=', $this->runnerData->resourceDemandId);
+        }
+        $existing_participant = $existing_participant->execute()->first();
 
         if (!empty($existing_participant['id'])) {
             // there is one, use that!
@@ -108,17 +114,20 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
 
         } else {
             // if there isn't one: create
-            $queryResult = civicrm_api3(
-                'Participant',
-                'create',
-                [
-                    'event_id' => $this->runnerData->eventId,
-                    'contact_id' => $contactId,
-                    'status_id' => CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME,
-                    'role_id' => $this->runnerData->participantRoleId,
-                ]
-            );
-            return $queryResult['id'];
+            $new_participant = Participant::create(false)
+                ->addValue('event_id', $this->runnerData->eventId)
+                ->addValue('contact_id', $contactId)
+                ->addValue('status_id:name', CRM_Eventinvitation_Upgrader::PARTICIPANT_STATUS_INVITED_NAME)
+                ->addValue('role_id', $this->runnerData->participantRoleId)
+                ->addValue('register_date', date('Y-m-d H:i:s'));
+            // When inviting as resource (de.systopia.resourceevent), add resource demand value.
+            if (!empty($this->runnerData->resourceDemandId)) {
+                $new_participant
+                    ->addValue('resource_information.resource_demand', $this->runnerData->resourceDemandId);
+            }
+            $new_participant = $new_participant->execute()->single();
+
+            return $new_participant['id'];
         }
     }
 

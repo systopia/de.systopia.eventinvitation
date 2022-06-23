@@ -28,6 +28,8 @@ class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_B
     /** @var string $participantRoleId */
     public $participantRoleId;
 
+    public $resourceDemandId;
+
     /** @var string $templateId */
     public $templateId;
 

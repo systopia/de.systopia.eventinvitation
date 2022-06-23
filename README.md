@@ -58,14 +58,24 @@ variables:
 ### Using a Drupal endpoint
 
 If you are using a Drupal endpoint based on CiviRemote, visit the extension's
-settings page, tickt the custom URL box and
-enter `https://yourpublicfrontend.org/civiremote/event/register/{token}` as the
-custom url.
+settings page, tickt the custom URL box and enter one of the following as the
+custom url, depending on your configuration and, if applicable, custom
+implementations:
+* `https://yourpublicfrontend.org/civiremote/event/register/{token}`
+    With the *register* endpoint, the user's reaction to the invitation is being
+    processed as a registration, i.e. they must have the permission to register,
+    which includes that registration for the event is still open and no other
+    restrictions are in effect.
+* `https://yourpublicfrontend.org/civiremote/event/update/{token}`
+    With the *update* endpoint, the user's reaction to the invitation is being
+    processed as an update to a registration (which, technically speaking,
+    already exists with the status *Invited*), i.e. they must have the
+    permission to update own registrations.
 
-On your public Drupal system,
-install [CiviRemote](https://github.com/systopia/civiremote), add a CiviRemote
-profile (`/admin/config/cmrf/profiles`) and
-connector (`/admin/config/cmrf/connectors`) if you have not done so yet.
+On your public Drupal system, install
+[CiviRemote](https://github.com/systopia/civiremote), add a CiviRemote profile
+(`/admin/config/cmrf/profiles`) and connector (`/admin/config/cmrf/connectors`)
+if you have not done so yet.
 
 ## Usage
 

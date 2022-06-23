@@ -18,6 +18,28 @@
         <div class="content">{$form.event.html}</div>
         <div class="clear"></div>
     </div>
+
+    {if $form.resource_demand_id}
+      <div class="help">
+          {ts 1=$resource_role_label}For inviting contacts as resources for the selected event, select the role %1 and choose the resource demand they should be assigned to.{/ts}
+      </div>
+
+      <div class="crm-section">
+        <div class="label">{$form.resource_demand_id.label}</div>
+        <div class="content">
+            {$form.resource_demand_id.html}
+            <div class="description">{ts}A resource demand is mandatory when inviting contacts as resources.{/ts}</div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    {/if}
+
+    <div class="crm-section">
+      <div class="label">{$form.participant_roles.label}</div>
+      <div class="content">{$form.participant_roles.html}</div>
+      <div class="clear"></div>
+    </div>
+
     <div class="crm-section">
         {capture assign=label_help}{ts}Template Help{/ts}{/capture}
         <div class="label">{$form.template.label}{help id="id-template-tokens" title=$label_help}</div>
@@ -32,11 +54,6 @@
     <div class="crm-section">
         <div class="label">{$form.email_sender.label}</div>
         <div class="content">{$form.email_sender.html}</div>
-        <div class="clear"></div>
-    </div>
-    <div class="crm-section">
-        <div class="label">{$form.participant_roles.label}</div>
-        <div class="content">{$form.participant_roles.html}</div>
         <div class="clear"></div>
     </div>
 
