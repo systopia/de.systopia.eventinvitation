@@ -16,7 +16,7 @@
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
-class CRM_Eventinvitation_Upgrader extends CRM_Eventinvitation_Upgrader_Base
+class CRM_Eventinvitation_Upgrader extends CRM_Extension_Upgrader_Base
 {
     const PARTICIPANT_STATUS_INVITED_NAME = 'Invited';
 
