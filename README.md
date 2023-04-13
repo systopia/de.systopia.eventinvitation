@@ -115,3 +115,7 @@ to generate an external landing page / endpoint for the form. For Drupal you
 will most likely want to use
 the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
 includes a lot of pre-built features.
+
+## Documentation
+- EN: https://docs.civicrm.org/eventinvitation/en/latest
+- DE: https://docs.civicrm.org/eventinvitation/de/latest
