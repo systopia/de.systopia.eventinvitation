@@ -117,5 +117,5 @@ the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
 includes a lot of pre-built features.
 
 ## Documentation
-- EN: https://docs.civicrm.org/eventinvitation/en/latest
-- DE: https://docs.civicrm.org/eventinvitation/de/latest
+- EN: https://docs.civicrm.org/eventinvitation/en/latest (automatic publishing)
+- DE: https://docs.civicrm.org/eventinvitation/de/latest (automatic publishing)
