@@ -44,7 +44,7 @@ to generate QR codes.
 
 Find the extension's settings under → Administer → Administration Console →
 Event Invitation Configuration (`/civicrm/eventinvitation/settings?reset=1`) and
-provide information on the enpoint, if you want to use one.
+provide information on the endpoint, if you want to use one.
 
 Create at least one message template that contains one of the following Smarty
 variables:
@@ -100,7 +100,7 @@ Registered" or "Cancelled" status depending on the user's choices.
 
 If you are aiming at utilizing an automated email workflow, checkin of
 participants using QR-Codes and/or using customized remote registration forms,
-make sure to have a look at tehe following extensions:
+make sure to have a look at the following extensions:
 
 * [Remote Events - create customized event registration forms and workflows](https://github.com/systopia/de.systopia.remoteevent)
 * [Event Checkin - use QR codes (e.g. on event tickets) to checkin participants to CiviCRM Events ](https://github.com/systopia/eventcheckin)
@@ -108,9 +108,9 @@ make sure to have a look at tehe following extensions:
 
 ## Known Issues
 
-The built in feedback form ist stilll very basic and limited in it's
-functionality so, unless you want to extend the built in form yourself or would
-be ready to fund some development to extend it's features we would encourage you
+The built-in feedback form ist still very basic and limited in its
+functionality so, unless you want to extend the built-in form yourself or would
+be ready to fund some development to extend its features we would encourage you
 to generate an external landing page / endpoint for the form. For Drupal you
 will most likely want to use
 the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
