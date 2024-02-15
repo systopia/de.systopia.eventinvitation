@@ -381,6 +381,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
             'get',
             [
                 'option_group_id' => 'participant_role',
+                'is_active' => TRUE,
                 'option.limit' => 0,
                 'return' => 'value,label',
             ]
