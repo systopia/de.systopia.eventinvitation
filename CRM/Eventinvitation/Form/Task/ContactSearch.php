@@ -121,7 +121,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
         $contactIds = $this->_contactIds;
 
         if (!$shallBePdfs && !$this->contactsHaveEmails($contactIds)) {
-            $this->_errors[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME] = E::ts("There are contacts that have no e-mail address.");
+            $this->_errors[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME] = E::ts("There are contacts that have no usable e-mail address.");
         }
 
         if ($this->contactsHaveNotInvitedParticipants($contactIds, $eventId, $participantRoleId)) {
@@ -159,6 +159,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
                         contact.id = email.contact_id
             WHERE
                 email.contact_id IN ($contactIdsAsCommaSeparatedList)
+                AND email.on_hold = 0
                 AND contact.do_not_email = 0
                 AND contact.is_deleted = 0
         ) AS distinct_contact
