@@ -51,16 +51,24 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender extends CRM_Eventinvitation_Q
                 'return' => 'display_name,email'
             ]
         );
+        $email = \Civi\Api4\Email::get(FALSE)
+            ->selectRowCount()
+            ->addWhere('contact_id', '=', $contactId)
+            ->addWhere('email', '=', $contactData['email'])
+            ->addWhere('on_hold', '=', 0)
+            ->execute()
+            ->count();
+        if ($email >= 1) {
+            $emailData = [
+                'id' => $this->runnerData->templateId,
+                'toName' => $contactData['display_name'],
+                'toEmail' => $contactData['email'],
+                'from' => $this->emailSender,
+                'contactId' => $contactId,
+                'tplParams' => $templateTokens,
+            ];
 
-        $emailData = [
-            'id' => $this->runnerData->templateId,
-            'toName' => $contactData['display_name'],
-            'toEmail' => $contactData['email'],
-            'from' => $this->emailSender,
-            'contactId' => $contactId,
-            'tplParams' => $templateTokens,
-        ];
-
-        civicrm_api3('MessageTemplate', 'send', $emailData);
+            civicrm_api3('MessageTemplate', 'send', $emailData);
+        }
     }
 }
