@@ -55,6 +55,12 @@ variables:
 * `{$qr_event_invite_code_data}` - generates a unique link for the participant
   presented as an QR Code that can be html formatted as an image
 
+*Remark*: if an event-invitation is being generated as pdf-file from a particular 
+message template, then only the *Html*-section of that template will be taken into
+account. The *Plain-Text* section will be ignored. In that case, all tokens should
+be placed into the *Html* section. *Plain-Text* only message template will result
+in empty pdf-files.
+
 ### Using a Drupal endpoint
 
 If you are using a Drupal endpoint based on CiviRemote, visit the extension's
