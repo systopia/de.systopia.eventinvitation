@@ -4,14 +4,15 @@
 
 This extension allows you to invite contacts in CiviCRM to an event and provides
 a simple feedback form where contacts can choose whether they can attend or not.
-You can invite contacts via email or letter, both can include a personalized
-link, if you use a letter, the link can be presented as a QR link.
+You can invite contacts via email or letter. Both can include a personalized
+invitation link. If you use a letter, the link can be presented as a QR link.
 
 Currently, the extension only provides a very basic built-in feedback form. This
-form currently only features a simple "register" button which will set the
-participant's status to confirmed so Weẃ encourage you to generate an external
-landing page / endpoint for the form. (seer below) For Drupal you will most
-likely want to use
+form only features a simple "register" button which will set the participant's
+status to confirmed. We encourage you to generate an external landing page or
+endpoint for the form (see below). 
+
+For Drupal you will most likely want to use
 the [CiviRemote Drupal module](https://github.com/systopia/civiremote) which
 includes a lot of pre-built features.
 
