@@ -69,11 +69,11 @@ msgid "Event Invitation Configuration"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php
-msgid "Enable custom endpoint"
+msgid "Use a custom registration endpoint"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php
-msgid "Custom link target URL:"
+msgid "Url of custom registration endpoint:"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Settings.php

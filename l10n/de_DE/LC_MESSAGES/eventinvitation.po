@@ -76,12 +76,12 @@ msgid "Event Invitation Configuration"
 msgstr "Konfiguration Veranstaltungseinladungen"
 
 #: CRM/Eventinvitation/Form/Settings.php
-msgid "Enable custom endpoint"
-msgstr "Benutzerdefinierte URL"
+msgid "Use a custom registration endpoint"
+msgstr "Benutzerdefinierte URL verwenden"
 
 #: CRM/Eventinvitation/Form/Settings.php
-msgid "Custom link target URL:"
-msgstr "Ziel-URL der Anmeldung"
+msgid "Url of custom registration endpoint:"
+msgstr "Benutzerdefinierte-URL der Anmeldung:"
 
 #: CRM/Eventinvitation/Form/Settings.php
 msgid "Enter a valid web address beginning with 'http://' or 'https://'."

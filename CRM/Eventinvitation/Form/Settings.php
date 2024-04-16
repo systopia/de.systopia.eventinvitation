@@ -31,15 +31,15 @@ class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form
         $this->add(
             'checkbox',
             self::LINK_TARGET_IS_CUSTOM_FORM_NAME,
-            E::ts('Enable custom endpoint')
+            E::ts('Use a custom registration endpoint')
         );
 
         $this->add(
             'text',
             self::CUSTOM_LINK_TARGET_FORM_NAME,
-            E::ts('Custom link target URL:'),
+            E::ts('Url of custom registration endpoint:'),
             ['class' => 'huge'],
-            true
+            false
         );
         $this->addRule(
             self::CUSTOM_LINK_TARGET_FORM_NAME,
