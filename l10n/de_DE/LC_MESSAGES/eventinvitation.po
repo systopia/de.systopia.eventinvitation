@@ -81,7 +81,7 @@ msgstr "Benutzerdefinierte URL verwenden"
 
 #: CRM/Eventinvitation/Form/Settings.php
 msgid "Url of custom registration endpoint:"
-msgstr "Benutzerdefinierte-URL der Anmeldung:"
+msgstr "Benutzerdefinierte URL der Anmeldung:"
 
 #: CRM/Eventinvitation/Form/Settings.php
 msgid "Enter a valid web address beginning with 'http://' or 'https://'."
