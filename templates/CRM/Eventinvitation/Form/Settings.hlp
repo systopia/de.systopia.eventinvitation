@@ -14,9 +14,14 @@
 
 {crmScope extensionKey='de.systopia.eventinvitation'}
 
-{htxt id='id-external_link'}
-  <p>{ts}You can add a link here, to use an external checkin page, rather than the built-in one.{/ts}</p>
-  <p>{ts}The link <strong>has to</strong> contain the <code>&#123;token&#125;</code> which will be replaced wit the generated code.{/ts}</p>
+{htxt id='id-link-target-enabled'}
+  <p>{ts}Here you can enable the use of an external registration-page.{/ts}</p>
+  <p>{ts}If this box is not checked but a url has been provided, then that url will be ignored and the built-in registration-page will be used.{/ts}</p>
+{/htxt}
+
+{htxt id='id-link-target'}
+  <p>{ts}Here you can add a url, in order to use an external registration-page, rather than the built-in one.{/ts}</p>
+  <p>{ts}The provided url <strong>has to</strong> contain the <code>&#123;token&#125;</code> which will be replaced by the generated code.{/ts}</p>
 {/htxt}
 
 {htxt id='id-token-timeout'}
