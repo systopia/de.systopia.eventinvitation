@@ -55,6 +55,7 @@ class CRM_Eventinvitation_Upgrader extends CRM_Extension_Upgrader_Base
             'ParticipantStatusType',
             'get',
             [
+                'sequential' => 1,
                 'name' => self::PARTICIPANT_STATUS_INVITED_NAME
             ]
         );
@@ -64,7 +65,7 @@ class CRM_Eventinvitation_Upgrader extends CRM_Extension_Upgrader_Base
                 'ParticipantStatusType',
                 'delete',
                 [
-                    'id' => $apiResult['values']['id']
+                    'id' => $apiResult['values'][0]['id']
                 ]
             );
         }
