@@ -39,7 +39,7 @@ class CRM_Eventinvitation_Queue_Runner_EmailSender extends CRM_Eventinvitation_Q
      * @param array $templateTokens
      *   tokens
      *
-     * @throws \CiviCRM_API3_Exception
+     * @throws \CRM_Core_Exception
      */
     protected function processContact($contactId, $templateTokens)
     {

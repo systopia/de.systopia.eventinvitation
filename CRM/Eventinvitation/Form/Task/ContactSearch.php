@@ -260,7 +260,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task
      * @return bool
      *   true if the template contains one of the tokens
      *
-     * @throws \CiviCRM_API3_Exception
+     * @throws \CRM_Core_Exception
      */
     private function templateHasCodeToken(string $templateId): bool
     {
