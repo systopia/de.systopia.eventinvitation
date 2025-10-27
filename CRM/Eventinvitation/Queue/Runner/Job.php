@@ -46,7 +46,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
      * @param array $templateTokens
      *   tokens
      *
-     * @throws \CiviCRM_API3_Exception
+     * @throws \CRM_Core_Exception
      */
     protected abstract function processContact($contactId, $templateTokens);
 
@@ -88,7 +88,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
      *   the contact that should be invited
      *
      * @return int
-     * @throws \CiviCRM_API3_Exception
+     * @throws \CRM_Core_Exception
      */
     protected function setParticipantToInvited(string $contactId): int
     {
@@ -187,7 +187,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job
             if (!empty($this->runnerData->eventId)) {
                 try {
                     $event_data = civicrm_api3('Event', 'getsingle', ['id' => $this->runnerData->eventId]);
-                } catch (CiviCRM_API3_Exception $ex) {
+                } catch (CRM_Core_Exception $ex) {
                     $event_data = []; // don't look up again
                     Civi::log()->error("Error loading event [{$this->runnerData->eventId}]: " . $ex->getMessage());
                 }
