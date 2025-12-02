@@ -1,20 +1,19 @@
-site_name: Event Invitations
+site_name: Event Invitation
+site_description: Allows you to issue and process event invitations for selected contacts
+site_author: SYSTOPIA
 repo_url: https://github.com/systopia/de.systopia.eventinvitation
-site_description: 'A guide for the Event Invitation extension.'
-site_author: 'SYSTOPIA'
+
 theme:
-  name:
-    material
+  name: material
 
 nav:
-  - Home: index.md
+  - Introduction: index.md
 
 markdown_extensions:
   - attr_list
   - admonition
   - def_list
-  - pymdownx.highlight:
-      guess_lang: false
+  - codehilite
   - toc:
       permalink: true
   - pymdownx.superfences

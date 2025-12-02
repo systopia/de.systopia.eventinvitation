@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*-------------------------------------------------------+
 | SYSTOPIA Event Invitation                              |
 | Copyright (C) 2020 SYSTOPIA                            |
@@ -17,23 +19,15 @@
 /**
  * Contains the data stored and used by the runners.
  */
-class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_BaseClass
-{
-    /** @var string[] $contactIds */
-    public $contactIds;
-
-    /** @var string $eventId */
-    public $eventId;
-
-    /** @var string $participantRoleId */
-    public $participantRoleId;
-
-    public $resourceDemandId;
-
-    /** @var string $templateId */
-    public $templateId;
-
-    /** @var string $temp_dir */
-    public $temp_dir;
+class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_BaseClass {
+  /**
+   * @var array<string>
+   */
+  public array $contactIds = [];
+  public ?int $eventId = NULL;
+  public ?int $participantRoleId = NULL;
+  public ?int $resourceDemandId = NULL;
+  public ?int $templateId = NULL;
+  public ?string $temp_dir = NULL;
 
 }

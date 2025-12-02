@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/tools" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/drupal/coder" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpcs/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/kcs/phpstan-strict-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/extension-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan-beberlei-assert" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan-deprecation-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan-phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan-strict-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/phpstan/phpstan-webmozart-assert" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpstan/vendor/voku/phpstan-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpunit/vendor/bin/.phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpunit/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/phpunit/vendor/symfony/phpunit-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/chillerlan/php-qrcode" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/chillerlan/php-settings-container" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
