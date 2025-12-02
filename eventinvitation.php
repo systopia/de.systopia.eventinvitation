@@ -31,9 +31,9 @@ function eventinvitation_civicrm_searchTasks(string $objectType, array &$tasks):
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  *
- * @phpstan-param array<string, mixed> $config
+ * @phpstan-param CRM_Core_Config $config
  */
-function eventinvitation_civicrm_config(array $config):void {
+function eventinvitation_civicrm_config(CRM_Core_Config $config):void {
   _eventinvitation_civix_civicrm_config($config);
 }
 

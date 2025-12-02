@@ -1,6 +1,7 @@
 /.phpcs.cache
 /.phpunit.result.cache
 /.phpstan/
+/.idea
 /composer.lock
 /phpstan.neon
 /tools/*/vendor/
