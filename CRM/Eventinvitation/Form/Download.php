@@ -69,112 +69,126 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
     // this means somebody clicked download
     $vars = $this->exportValues();
     if (isset($vars['_qf_Download_submit'])) {
-      // verify folder
-      if (preg_match('#/eventinvitation_pdf_generator_\w+$#', $this->tmp_folder) === FALSE) {
-        throw new IllegalPathException('Illegal path!');
-      }
-
-      // download PDFs
-      // todo: verify folder
-      try {
-        // create ZIP file
-        $filename = $this->tmp_folder . DIRECTORY_SEPARATOR . 'all.zip';
-
-        // first: try with command line tool to avoid memory issues
-        $pattern = E::ts('Invitation-%1.pdf', [1 => '*']);
-        $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
-        Civi::log()->debug("EventInvitation executing '{$command}' to zip generated pdfs...");
-        $timestamp = microtime(TRUE);
-        exec($command);
-        $runtime = microtime(TRUE) - $timestamp;
-        Civi::log()->debug("EventInvitation zip command took {$runtime}s");
-
-        // if this didn't work, use PHP (memory intensive)
-        if (!file_exists($filename)) {
-          // this didn't work, use the
-          $zip = new ZipArchive();
-          $zip->open($filename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-          // add all Invitation-X.pdf files
-          foreach (scandir($this->tmp_folder) as $file) {
-            $pattern = E::ts('Invitation-%1.pdf', [1 => '[0-9]+']);
-            if (preg_match("/{$pattern}/", $file) === 1) {
-              $zip->addFile($this->tmp_folder . DIRECTORY_SEPARATOR . $file, $file);
-            }
-          }
-          $zip->close();
-        }
-
-        // trigger download
-        if (file_exists($filename)) {
-          // set file metadata
-          header('Content-Type: application/zip');
-          header('Content-Disposition: attachment; filename=' . E::ts('Invitations.zip'));
-          header('Content-Length: ' . filesize($filename));
-
-          // dump file contents in stream and exit
-          // caution: big files need to be treated carefully, to not cause out of memory errors
-          // based on: https://zinoui.com/blog/download-large-files-with-php
-
-          // first: disable output buffering
-          if (ob_get_level() > 0) {
-            ob_end_clean();
-          }
-
-          // then read the file chunk by chunk and write to output (echo)
-          // 16 MB chunks
-          $chunkSize = 16 * 1024 * 1024;
-          $handle = fopen($filename, 'rb');
-          if ($handle !== FALSE) {
-            while (!feof($handle)) {
-              $buffer = fread($handle, $chunkSize);
-              echo $buffer;
-              ob_flush();
-              flush();
-            }
-            fclose($handle);
-          }
-
-          // delete the zip file
-          unlink($filename);
-
-          // we're done
-          CRM_Utils_System::civiExit();
-
-        }
-        else {
-          // this file really should exist...
-          throw new ZipMissingException(E::ts("ZIP file couldn't be generated. Contact the author."));
-        }
-
-      }
-      // @ignoreException
-      // @phpstan-ignore-next-line
-      catch (Exception $ex) {
-        CRM_Core_Session::setStatus(
-          E::ts('Error downloading PDF files: %1', [1 => $ex->getMessage()]),
-          E::ts('Download Error'),
-          'error');
-      }
-
+      $this->handleDownloadSubmit();
     }
     elseif (isset($vars['_qf_Download_done'])) {
-      // delete tmp folder
-      foreach (scandir($this->tmp_folder) as $file) {
-        if ($file !== '.' && $file !== '..') {
-          unlink($this->tmp_folder . DIRECTORY_SEPARATOR . $file);
-        }
-      }
-      rmdir($this->tmp_folder);
-
-      // go back
-      $returnString = base64_decode($this->return_url, TRUE);
-      if ($returnString !== FALSE) {
-        CRM_Utils_System::redirect($returnString);
-      }
+      $this->handleDownloadDone();
     }
 
     parent::postProcess();
+  }
+
+  /**
+   * @throws IllegalPathException
+   */
+  private function handleDownloadSubmit():void {
+    // verify folder
+    if (preg_match('#/eventinvitation_pdf_generator_\w+$#', $this->tmp_folder) === FALSE) {
+      throw new IllegalPathException('Illegal path!');
+    }
+
+    // download PDFs
+    // todo: verify folder
+    try {
+      $filename = $this->tmp_folder . DIRECTORY_SEPARATOR . 'all.zip';
+      $this->buildZipFile($filename);
+
+      if (file_exists($filename)) {
+        $this->streamZipFile($filename);
+      }
+      else {
+        // this file really should exist...
+        throw new ZipMissingException(E::ts("ZIP file couldn't be generated. Contact the author."));
+      }
+    }
+    // @ignoreException
+    // @phpstan-ignore-next-line
+    catch (Exception $ex) {
+      CRM_Core_Session::setStatus(
+        E::ts('Error downloading PDF files: %1', [1 => $ex->getMessage()]),
+        E::ts('Download Error'),
+        'error');
+    }
+  }
+
+  private function handleDownloadDone():void {
+    // delete tmp folder
+    foreach (scandir($this->tmp_folder) as $file) {
+      if ($file !== '.' && $file !== '..') {
+        unlink($this->tmp_folder . DIRECTORY_SEPARATOR . $file);
+      }
+    }
+    rmdir($this->tmp_folder);
+
+    // go back
+    $returnString = base64_decode($this->return_url, TRUE);
+    if ($returnString !== FALSE) {
+      CRM_Utils_System::redirect($returnString);
+    }
+  }
+
+  private function buildZipFile(string $filename):void {
+    // first: try with command line tool to avoid memory issues
+    $pattern = E::ts('Invitation-%1.pdf', [1 => '*']);
+    $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
+    Civi::log()->debug("EventInvitation executing '{$command}' to zip generated pdfs...");
+    $timestamp = microtime(TRUE);
+    exec($command);
+    $runtime = microtime(TRUE) - $timestamp;
+    Civi::log()->debug("EventInvitation zip command took {$runtime}s");
+
+    // if this didn't work, use PHP (memory intensive)
+    if (file_exists($filename)) {
+      return;
+    }
+
+    $zip = new ZipArchive();
+    $zip->open($filename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+    // add all Invitation-X.pdf files
+    foreach (scandir($this->tmp_folder) as $file) {
+      $pattern = E::ts('Invitation-%1.pdf', [1 => '[0-9]+']);
+      if (preg_match("/{$pattern}/", $file) === 1) {
+        $zip->addFile($this->tmp_folder . DIRECTORY_SEPARATOR . $file, $file);
+      }
+    }
+    $zip->close();
+  }
+
+  private function streamZipFile(string $filename):void {
+    // set file metadata
+    header('Content-Type: application/zip');
+    header('Content-Disposition: attachment; filename=' . E::ts('Invitations.zip'));
+    header('Content-Length: ' . filesize($filename));
+
+    // dump file contents in stream and exit
+    // caution: big files need to be treated carefully, to not cause out of memory errors
+    // based on: https://zinoui.com/blog/download-large-files-with-php
+
+    // first: disable output buffering
+    if (ob_get_level() > 0) {
+      ob_end_clean();
+    }
+
+    // then read the file chunk by chunk and write to output (echo)
+    // 16 MB chunks
+    $chunkSize = 16 * 1024 * 1024;
+    $handle = fopen($filename, 'rb');
+    if ($handle !== FALSE) {
+      while (!feof($handle)) {
+        $buffer = fread($handle, $chunkSize);
+        echo $buffer;
+        ob_flush();
+        flush();
+      }
+      fclose($handle);
+    }
+
+    // delete the zip file
+    unlink($filename);
+
+    // we're done
+    CRM_Utils_System::civiExit();
   }
 
 }
