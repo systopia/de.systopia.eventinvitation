@@ -23,6 +23,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Check out sibling extensions
+      working-directory: ..
+      run: |
+        git clone --depth 1 https://github.com/systopia/de.systopia.remotetools.git
+        git clone --depth 1 https://github.com/systopia/de.systopia.resourceevent.git
+        git clone --depth 1 https://github.com/systopia/de.systopia.resource.git
+
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
