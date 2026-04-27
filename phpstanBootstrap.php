@@ -37,6 +37,9 @@ foreach ($bootstrapFiles as $bootstrapFile) {
       require_once $bootstrapFile;
       // Prevent error "Class 'CRM_Core_Exception' not found in file".
       require_once $civiCrmCoreDir . '/CRM/Core/Exception.php';
+      // Make HTML_QuickForm members visible to PHPStan when analysing form
+      // subclasses. Pulls in HTML_QuickForm.php via the include_path set above.
+      require_once $civiCrmPackagesDir . '/HTML/QuickForm/Page.php';
 
       // The class \Smarty extended by \CRM_Core_SmartyCompatibility uses the
       // __call() method to delegate method calls to \Smarty\Smarty, but hasn't
