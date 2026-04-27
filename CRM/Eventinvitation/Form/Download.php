@@ -81,25 +81,16 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
         $filename = $this->tmp_folder . DIRECTORY_SEPARATOR . 'all.zip';
 
         // first: try with command line tool to avoid memory issues
-        $has_error = FALSE;
-        try {
-          // TODO: nothing here should be able to throw an exception.
-          $pattern = E::ts('Invitation-%1.pdf', [1 => '*']);
-          $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
-          Civi::log()->debug("EventInvitation executing '{$command}' to zip generated pdfs...");
-          $timestamp = microtime(TRUE);
-          exec($command);
-          $runtime = microtime(TRUE) - $timestamp;
-          Civi::log()->debug("EventInvitation zip command took {$runtime}s");
-        }
-        // @ignoreException
-        // @phpstan-ignore-next-line
-        catch (Exception) {
-          $has_error = TRUE;
-        }
+        $pattern = E::ts('Invitation-%1.pdf', [1 => '*']);
+        $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
+        Civi::log()->debug("EventInvitation executing '{$command}' to zip generated pdfs...");
+        $timestamp = microtime(TRUE);
+        exec($command);
+        $runtime = microtime(TRUE) - $timestamp;
+        Civi::log()->debug("EventInvitation zip command took {$runtime}s");
 
         // if this didn't work, use PHP (memory intensive)
-        if ($has_error || !file_exists($filename)) {
+        if (!file_exists($filename)) {
           // this didn't work, use the
           $zip = new ZipArchive();
           $zip->open($filename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
