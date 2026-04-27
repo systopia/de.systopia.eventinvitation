@@ -6,6 +6,7 @@ parameters:
 		- vendor/civicrm/civicrm-core/CRM
 		- vendor/civicrm/civicrm-core/Civi
 		- vendor/civicrm/civicrm-core/api
+		- vendor/civicrm/civicrm-core/ext
 		- vendor/civicrm/civicrm-packages
 	bootstrapFiles:
 		- vendor/autoload.php
