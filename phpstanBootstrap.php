@@ -24,9 +24,18 @@ $bootstrapFiles = $container->getParameter('bootstrapFiles');
 foreach ($bootstrapFiles as $bootstrapFile) {
   if (str_ends_with($bootstrapFile, 'vendor/autoload.php')) {
     $vendorDir = dirname($bootstrapFile);
+    // Installation via composer (e.g. as Drupal module)
     $civiCrmVendorDir = $vendorDir . '/civicrm';
     $civiCrmCoreDir = $civiCrmVendorDir . '/civicrm-core';
     $civiCrmPackagesDir = $civiCrmVendorDir . '/civicrm-packages';
+    // Installation without composer (e.g. as WordPress plugin)
+    if (!is_dir($civiCrmCoreDir) || !is_dir($civiCrmPackagesDir)) {
+      $civiCrmCoreDir = $vendorDir . '/..';
+      $civiCrmPackagesDir = $civiCrmCoreDir . '/packages';
+    }
+    if (!is_dir($civiCrmCoreDir) || !is_dir($civiCrmPackagesDir)) {
+      continue;
+    }
     if (file_exists($civiCrmCoreDir)) {
       set_include_path(get_include_path()
         . PATH_SEPARATOR . $civiCrmCoreDir
@@ -37,9 +46,6 @@ foreach ($bootstrapFiles as $bootstrapFile) {
       require_once $bootstrapFile;
       // Prevent error "Class 'CRM_Core_Exception' not found in file".
       require_once $civiCrmCoreDir . '/CRM/Core/Exception.php';
-      // Make HTML_QuickForm members visible to PHPStan when analysing form
-      // subclasses. Pulls in HTML_QuickForm.php via the include_path set above.
-      require_once $civiCrmPackagesDir . '/HTML/QuickForm/Page.php';
 
       // The class \Smarty extended by \CRM_Core_SmartyCompatibility uses the
       // __call() method to delegate method calls to \Smarty\Smarty, but hasn't
