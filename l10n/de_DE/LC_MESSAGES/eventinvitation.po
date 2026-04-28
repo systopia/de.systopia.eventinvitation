@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2021-02-09 18:59+0100\n"
+"POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: CRM/Eventinvitation/Form/Download.php
 msgid "Your Invitation PDFs are ready for download."
@@ -29,17 +29,8 @@ msgid "Back to Search"
 msgstr "Zurück zum Suchergebnis)"
 
 #: CRM/Eventinvitation/Form/Download.php
-#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "Invitation-%1.pdf"
-msgstr "Einladung-%1.pdf"
-
-#: CRM/Eventinvitation/Form/Download.php
-msgid "Invitations.zip"
-msgstr "Einladungen.zip"
-
-#: CRM/Eventinvitation/Form/Download.php
 msgid "ZIP file couldn't be generated. Contact the author."
-msgstr ""
+msgstr "ZIP-Datei konnte nicht erzeugt werden. Kontaktieren Sie den Autor."
 
 #: CRM/Eventinvitation/Form/Download.php
 msgid "Error downloading PDF files: %1"
@@ -48,6 +39,15 @@ msgstr "Fehler beim Herunterladen der PDF Dateien: %1"
 #: CRM/Eventinvitation/Form/Download.php
 msgid "Download Error"
 msgstr "Download Fehler"
+
+#: CRM/Eventinvitation/Form/Download.php
+#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
+msgid "Invitation-%1.pdf"
+msgstr "Einladung-%1.pdf"
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Invitations.zip"
+msgstr "Einladungen.zip"
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Invalid or expired invite code"
@@ -59,9 +59,7 @@ msgstr "Anmeldung für '%1'"
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Congratulations! You have successfully registered for the event \"%1\"!"
-msgstr ""
-"Gratuliere, Sie haben sich erfolgreich für die Veranstaltung \"%1\" "
-"angemeldet."
+msgstr "Sie haben sich erfolgreich für die Veranstaltung \"%1\" angemeldet."
 
 #: CRM/Eventinvitation/Form/Register.php
 msgid "Do you want to register for the event \"%1\"?"
@@ -105,6 +103,10 @@ msgid "Event"
 msgstr "Veranstaltung"
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Resource Demand"
+msgstr "Ressourcenbedarf"
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
 msgid "Generate PDFs instead of sending e-mails."
 msgstr "Postalisch verschicken (PDF)"
 
@@ -121,25 +123,34 @@ msgid "Participant role"
 msgstr "Teilnehmerrolle"
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
-msgid "There are contacts that have no e-mail address."
-msgstr "Einige der Kontakt habe keine E-Mail Adresse."
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid "A resource demand is mandatory when inviting contacts as resources."
+msgstr ""
+"Ein Ressourcenbedarf ist notwendig, um Kontakte als Ressourcen einzuladen."
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Select the role %1 for inviting contacts as resources."
+msgstr "Wählen Sie die Rolle %1, um Kontakte als Ressourcen einzuladen."
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "The resource demand does not belong to the selected event."
+msgstr "Der Ressourcenbedarf gehört nicht zur ausgewählten Veranstaltung."
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "There are contacts that have no usable e-mail address."
+msgstr "Einige der Kontakte haben keine E-Mail Adresse."
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
 msgid ""
-"There are contacts that are participants with a status other than \"Invited"
-"\"."
+"There are contacts that are participants with a status other than "
+"\"Invited\"."
 msgstr "Einige der Kontakte haben bereits eine Status (außer 'Eingeladen')."
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
-#, fuzzy
-#| msgid ""
-#| "The given template doesn't contain the token <code>%1</code> for the "
-#| "invitation URL."
 msgid ""
 "The given template doesn't contain any of the code tokens for the invitation "
 "URL."
-msgstr ""
-"Die Vorlage enthält den Token <code>%1</code> für den Einladungslink nicht."
+msgstr "Die Vorlage enthält kein Code-Token für den Einladungslink."
 
 #: CRM/Eventinvitation/Queue/Runner/Job.php
 msgid "Processing contacts %1 to %2."
@@ -157,38 +168,59 @@ msgstr "Versende E-Mails."
 msgid "Generating PDFs."
 msgstr "Erstelle PDFs."
 
-#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "PDF Generation Failed"
-msgstr ""
-
-#: CRM/Eventinvitation/Upgrader/Base.php
-msgid "Upgrade %1 to revision %2"
-msgstr ""
-
 #: CRM/Eventinvitation/Upgrader.php
 msgid "Invited"
-msgstr "eingeladen"
+msgstr "Eingeladen"
 
 #: eventinvitation.php
 msgid "Invite to event"
 msgstr "Zu Veranstaltung einladen"
 
-#: templates/CRM/Eventinvitation/Form/Settings.hlp
-msgid ""
-"Activate using a custom target link. Otherwise the build-in page is used."
+#: js/invite-resource.js
+msgid "de.systopia.eventinvitation"
 msgstr ""
-"Hier kann ein benutzerdefinierter Link für die Anmeldeseite angegeben "
-"werden. Ansonsten wird der Link auf die eingebaute Anmeldeseite leiten."
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "Here you can enable the use of an external registration-page."
+msgstr ""
+"Hier können Sie die Verwendung einer externen Registrierungs-Seite "
+"aktivieren."
 
 #: templates/CRM/Eventinvitation/Form/Settings.hlp
 msgid ""
-"You can provide a custom URL to link to another registration endpoint. The "
-"URL must start with 'http://' or 'https://' and contain the the placeholder "
-"<code>&lbrace;token&rbrace;</code>."
+"If this box is not checked but a url has been provided, then that url will "
+"be ignored and the built-in registration-page will be used."
 msgstr ""
-"Sie können hier einen alternativen Link zu einer Registrierungsseite "
-"angeben. Die URL muss mit 'http://' oder 'https://' beginnen, und den "
-"Platzhalter <code>&lbrace;token&rbrace;</code> beinhalten."
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"Here you can add a url, in order to use an external registration-page, "
+"rather than the built-in one."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"The provided url <strong>has to</strong> contain the <code>&#123;token&#125;"
+"</code> which will be replaced by the generated code."
+msgstr ""
+"Die bereitgestellte URL <strong>muss</strong> den <code>&#123;token&#125;</"
+"code> enthalten, der durch den generierten Code ersetzt wird."
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "Here you can define, until when the token should be valid."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"After the event has ended, none of the tokens will be valid any more, "
+"regardless of this setting."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid ""
+"Keep in mind that this is encoded in the token itself, so changing this "
+"setting will only affect newly generated tokens."
+msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
 msgid ""
@@ -202,7 +234,7 @@ msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
 msgid "Beyond that, the following special tokens are available:"
-msgstr "Darüber hinaus sind die folgenden Zusatztoken verfügbar."
+msgstr "Darüber hinaus sind die folgenden Zusatztoken verfügbar:"
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
 msgid ""
@@ -232,8 +264,29 @@ msgstr ""
 "<code>img</code> Element."
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid ""
+"For inviting contacts as resources for the selected event, select the role "
+"%1 and choose the resource demand they should be assigned to."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
 msgid "Template Help"
 msgstr "Hilfe zur Vorlage"
+
+#~ msgid ""
+#~ "Activate using a custom target link. Otherwise the build-in page is used."
+#~ msgstr ""
+#~ "Hier kann ein benutzerdefinierter Link für die Anmeldeseite angegeben "
+#~ "werden. Ansonsten wird der Link auf die eingebaute Anmeldeseite leiten."
+
+#~ msgid ""
+#~ "You can provide a custom URL to link to another registration endpoint. "
+#~ "The URL must start with 'http://' or 'https://' and contain the the "
+#~ "placeholder <code>&lbrace;token&rbrace;</code>."
+#~ msgstr ""
+#~ "Sie können hier einen alternativen Link zu einer Registrierungsseite "
+#~ "angeben. Die URL muss mit 'http://' oder 'https://' beginnen, und den "
+#~ "Platzhalter <code>&lbrace;token&rbrace;</code> beinhalten."
 
 #~ msgid "Sending e-mails %1 to %2."
 #~ msgstr "Versende E-Mails %1 bis %2."

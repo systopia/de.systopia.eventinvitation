@@ -1,16 +1,3 @@
-# Copyright CiviCRM LLC (c) 2004-2015
-# This file is distributed under the same license as the CiviCRM package.
-# If you contribute heavily to a translation and deem your work copyrightable,
-# make sure you license it to CiviCRM LLC under Academic Free License 3.0.
-msgid ""
-msgstr ""
-"Project-Id-Version: de.systopia.eventinvitation\n"
-"POT-Creation-Date: 2021-02-09 18:59+0100\n"
-"Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-
 #: CRM/Eventinvitation/Form/Download.php
 msgid "Your Invitation PDFs are ready for download."
 msgstr ""
@@ -24,15 +11,6 @@ msgid "Back to Search"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Download.php
-#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "Invitation-%1.pdf"
-msgstr ""
-
-#: CRM/Eventinvitation/Form/Download.php
-msgid "Invitations.zip"
-msgstr ""
-
-#: CRM/Eventinvitation/Form/Download.php
 msgid "ZIP file couldn't be generated. Contact the author."
 msgstr ""
 
@@ -42,6 +20,14 @@ msgstr ""
 
 #: CRM/Eventinvitation/Form/Download.php
 msgid "Download Error"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
+msgid "Invitation-%1.pdf"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Download.php
+msgid "Invitations.zip"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Register.php
@@ -97,6 +83,10 @@ msgid "Event"
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "Resource Demand"
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
 msgid "Generate PDFs instead of sending e-mails."
 msgstr ""
 
@@ -112,20 +102,28 @@ msgstr ""
 msgid "Participant role"
 msgstr ""
 
-#: CRM/Eventinvitation/Form/Task/ContactSearch.php
-msgid "There are contacts that have no e-mail address."
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid "A resource demand is mandatory when inviting contacts as resources."
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
-msgid ""
-"There are contacts that are participants with a status other than \"Invited"
-"\"."
+msgid "Select the role %1 for inviting contacts as resources."
 msgstr ""
 
 #: CRM/Eventinvitation/Form/Task/ContactSearch.php
-msgid ""
-"The given template doesn't contain any of the code tokens for the invitation "
-"URL."
+msgid "The resource demand does not belong to the selected event."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "There are contacts that have no usable e-mail address."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "There are contacts that are participants with a status other than \"Invited\"."
+msgstr ""
+
+#: CRM/Eventinvitation/Form/Task/ContactSearch.php
+msgid "The given template doesn't contain any of the code tokens for the invitation URL."
 msgstr ""
 
 #: CRM/Eventinvitation/Queue/Runner/Job.php
@@ -144,14 +142,6 @@ msgstr ""
 msgid "Generating PDFs."
 msgstr ""
 
-#: CRM/Eventinvitation/Queue/Runner/PdfGenerator.php
-msgid "PDF Generation Failed"
-msgstr ""
-
-#: CRM/Eventinvitation/Upgrader/Base.php
-msgid "Upgrade %1 to revision %2"
-msgstr ""
-
 #: CRM/Eventinvitation/Upgrader.php
 msgid "Invited"
 msgstr ""
@@ -160,23 +150,40 @@ msgstr ""
 msgid "Invite to event"
 msgstr ""
 
-#: templates/CRM/Eventinvitation/Form/Settings.hlp
-msgid ""
-"Activate using a custom target link. Otherwise the build-in page is used."
+#: js/invite-resource.js
+msgid "de.systopia.eventinvitation"
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Settings.hlp
-msgid ""
-"You can provide a custom URL to link to another registration endpoint. The "
-"URL must start with 'http://' or 'https://' and contain the the placeholder "
-"<code>&lbrace;token&rbrace;</code>."
+msgid "Here you can enable the use of an external registration-page."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "If this box is not checked but a url has been provided, then that url will be ignored and the built-in registration-page will be used."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "Here you can add a url, in order to use an external registration-page, rather than the built-in one."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "The provided url <strong>has to</strong> contain the <code>&#123;token&#125;</code> which will be replaced by the generated code."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "Here you can define, until when the token should be valid."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "After the event has ended, none of the tokens will be valid any more, regardless of this setting."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Settings.hlp
+msgid "Keep in mind that this is encoded in the token itself, so changing this setting will only affect newly generated tokens."
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
-msgid ""
-"The template chosen here <strong>must</strong> contain the <code>&#123;"
-"$qr_event_invite_code&#125;</code> token. It contains the personalised "
-"invitation link."
+msgid "The template chosen here <strong>must</strong> contain the <code>&#123;$qr_event_invite_code&#125;</code> token. It contains the personalised invitation link."
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
@@ -184,24 +191,22 @@ msgid "Beyond that, the following special tokens are available:"
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
-msgid ""
-"<code>&#123;$event.xxx&#125;</code>: fields of the given event. For the "
-"available 'xxx' field names, check the API explorer with <code>Event.get</"
-"code>."
+msgid "<code>&#123;$event.xxx&#125;</code>: fields of the given event. For the available 'xxx' field names, check the API explorer with <code>Event.get</code>."
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
-msgid ""
-"<code>&#123;$qr_event_invite_code_data&#125;</code>: QR-Code date to be used "
-"in as <code>src</code> in an html <code>img</code> tag."
+msgid "<code>&#123;$qr_event_invite_code_data&#125;</code>: QR-Code date to be used in as <code>src</code> in an html <code>img</code> tag."
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.hlp
-msgid ""
-"<code>&#123;$qr_event_invite_code_img&#125;</code>: QR-Code <code>img</code> "
-"element."
+msgid "<code>&#123;$qr_event_invite_code_img&#125;</code>: QR-Code <code>img</code> element."
+msgstr ""
+
+#: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
+msgid "For inviting contacts as resources for the selected event, select the role %1 and choose the resource demand they should be assigned to."
 msgstr ""
 
 #: templates/CRM/Eventinvitation/Form/Task/ContactSearch.tpl
 msgid "Template Help"
 msgstr ""
+
