@@ -25,7 +25,7 @@ class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form {
 
   public const SETTINGS_KEY = 'eventinvitation_settings';
 
-  public function buildQuickForm():void {
+  public function buildQuickForm(): void {
     $this->setTitle(E::ts('Event Invitation Configuration'));
 
     $this->add(
@@ -66,7 +66,7 @@ class CRM_Eventinvitation_Form_Settings extends CRM_Core_Form {
     parent::buildQuickForm();
   }
 
-  public function postProcess():void {
+  public function postProcess(): void {
     parent::postProcess();
 
     $values = $this->exportValues(

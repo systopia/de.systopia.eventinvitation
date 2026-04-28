@@ -37,7 +37,7 @@ class CRM_Eventinvitation_Queue_Runner_PdfGenerator extends CRM_Eventinvitation_
    *
    * @throws Exception
    */
-  protected function processContact(int $contactId, array $templateTokens):void {
+  protected function processContact(int $contactId, array $templateTokens): void {
     // get the template (once per batch)
     static $template = NULL;
     if ($template === NULL) {

@@ -21,7 +21,7 @@ declare(strict_types = 1);
  */
 class CRM_Eventinvitation_Object_RunnerData extends CRM_Eventinvitation_Object_BaseClass {
   /**
-   * @var array<string>
+   * @var list<int>
    */
   public array $contactIds = [];
   public ?int $eventId = NULL;

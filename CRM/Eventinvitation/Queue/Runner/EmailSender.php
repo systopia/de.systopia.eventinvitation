@@ -19,8 +19,7 @@ declare(strict_types = 1);
 use Civi\Api4\Email;
 
 class CRM_Eventinvitation_Queue_Runner_EmailSender extends CRM_Eventinvitation_Queue_Runner_Job {
-  /**
-   * @var string*/
+
   protected string $emailSender;
 
   public function __construct(

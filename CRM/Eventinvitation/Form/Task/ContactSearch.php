@@ -37,7 +37,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
   /**
    * @throws CRM_Core_Exception
    */
-  public function buildQuickForm():void {
+  public function buildQuickForm(): void {
 
     parent::buildQuickForm();
 
@@ -153,13 +153,13 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
       $resource_role = Civi\Resourceevent\Utils::getResourceRole(TRUE);
       if (
         $values[self::PARTICIPANT_ROLES_ELEMENT_NAME] === key($resource_role)
-        && !isset($values['resource_demand_id'])
+        && empty($values['resource_demand_id'])
       ) {
         $msg = E::ts('A resource demand is mandatory when inviting contacts as resources.');
         $this->_errors['resource_demand_id'] = $msg;
       }
       if (
-        !isset($values['resource_demand_id'])
+        !empty($values['resource_demand_id'])
         && $values[self::PARTICIPANT_ROLES_ELEMENT_NAME] !== key($resource_role)
       ) {
         $this->_errors[self::PARTICIPANT_ROLES_ELEMENT_NAME] = E::ts(
@@ -168,7 +168,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         );
       }
       if (
-        isset($values['resource_demand_id'])
+        !empty($values['resource_demand_id'])
         && $values['event'] !== ResourceDemand::get(FALSE)
           ->addSelect('entity_id')
           ->addWhere('entity_table', '=', 'civicrm_event')
@@ -213,9 +213,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
   }
 
   /**
-   * Checks whether contacts have emails.
-   * @param array<int> $contactIds
-   * @return bool
+   * @phpstan-param list<int> $contactIds
    * @throws CRM_Core_Exception
    */
   private function contactsHaveEmails(array $contactIds): bool {
@@ -249,10 +247,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
 
   /**
    * Checks whether contacts have not invited participants.
-   * @param array<int> $contactIds
-   * @param string $eventId
-   * @param string $participantRoleId
-   * @return bool
+   * @phpstan-param list<int> $contactIds
    * @throws CRM_Core_Exception
    */
   private function contactsHaveNotInvitedParticipants(
@@ -316,7 +311,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
   /**
    * @throws CRM_Core_Exception
    */
-  public function postProcess():void {
+  public function postProcess(): void {
     parent::postProcess();
 
     $values = $this->exportValues(NULL, TRUE);
@@ -363,7 +358,8 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
 
     /** @var array<string,string> $list */
     $list = [];
-    $query = (array) civicrm_api3(
+    /** @phpstan-var array{values: array<int, array{value: string, label: string}>} $query */
+    $query = civicrm_api3(
         'OptionValue',
         'get',
         [

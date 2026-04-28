@@ -25,19 +25,20 @@ class CRM_Eventinvitation_EventInvitationCode {
    */
   public static function generate(string|int $participantId): string {
     $code = CRM_Remotetools_SecureToken::generateEntityToken(
-        'Participant',
-        intval($participantId),
-        NULL,
-        self::PARTICIPANT_CODE_USAGE
+      'Participant',
+      (int) $participantId,
+      NULL,
+      self::PARTICIPANT_CODE_USAGE
     );
 
     return $code;
   }
 
   /**
-   * @return int|null The participant ID or, if invalid, null.
+   * @return int|null
+   *   The participant ID or null if invalid.
    */
-  public static function validate(string $code): int|null {
+  public static function validate(string $code): ?int {
     $participantId = CRM_Remotetools_SecureToken::decodeEntityToken(
         'Participant',
         $code,

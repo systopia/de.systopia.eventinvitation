@@ -48,7 +48,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job {
    *
    * @throws CRM_Core_Exception
    */
-  abstract protected function processContact(int $contactId, array $templateTokens):void;
+  abstract protected function processContact(int $contactId, array $templateTokens): void;
 
   /**
    * Dispatch the contacts to the processContact function
@@ -86,20 +86,19 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job {
    * TODO: do we want to upgrade an existing invitation, e.g. the date?
    *
    * As a result: if there is already an existing participant for this contact/event, we do nothing.
-   * @param string $contactId
+   * @param int $contactId
    *   the contact that should be invited
    *
-   * @return int
    * @throws CRM_Core_Exception
    *
    */
-  protected function setParticipantToInvited(string $contactId): int {
+  protected function setParticipantToInvited(int $contactId): int {
     // check if there is/are already existing participants
     $existing_participant = Participant::get(FALSE)
       ->addWhere('event_id', '=', $this->runnerData->eventId)
       ->addWhere('contact_id', '=', $contactId);
     // When inviting as resources (de.systopia.resourceevent), filter for role and resource demand.
-    if (isset($this->runnerData->resourceDemandId)) {
+    if (!empty($this->runnerData->resourceDemandId)) {
       $existing_participant
         ->addWhere(
             'role_id',
@@ -110,7 +109,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job {
     }
     $existing_participant = $existing_participant->execute()->first();
 
-    if (isset($existing_participant['id'])) {
+    if (!empty($existing_participant['id'])) {
       // there is one, use that!
       return $existing_participant['id'];
 
@@ -124,7 +123,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job {
         ->addValue('role_id', $this->runnerData->participantRoleId)
         ->addValue('register_date', date('Y-m-d H:i:s'));
       // When inviting as resource (de.systopia.resourceevent), add resource demand value.
-      if (isset($this->runnerData->resourceDemandId)) {
+      if (!empty($this->runnerData->resourceDemandId)) {
         $new_participant
           ->addValue('resource_information.resource_demand', $this->runnerData->resourceDemandId);
       }

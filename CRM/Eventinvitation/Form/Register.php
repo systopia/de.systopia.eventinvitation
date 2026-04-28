@@ -19,22 +19,21 @@ declare(strict_types = 1);
 use CRM_Eventinvitation_ExtensionUtil as E;
 
 class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
-  /**
-   * @var string|null*/
-  public string|null $code = NULL;
+
+  public ?string $code = NULL;
 
   /**
    * @throws CRM_Core_Exception
    */
-  public function buildQuickForm():void {
+  public function buildQuickForm(): void {
     // TODO: Show something here after registering!
 
     parent::buildQuickForm();
 
     $participantId = NULL;
-    /** @var string|null $codeString */
-    $codeString = CRM_Utils_Request::retrieve('code', 'String', $this);
-    $this->code = $codeString;
+    /** @var string|null $code */
+    $code = CRM_Utils_Request::retrieve('code', 'String', $this);
+    $this->code = $code;
 
     if ($this->code !== NULL) {
       $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
@@ -44,7 +43,8 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
       $headline = E::ts('Invalid or expired invite code');
     }
     else {
-      $isAlreadyRegistered = civicrm_api3(
+      /** @var int $registrationCount */
+      $registrationCount = civicrm_api3(
         'Participant',
         'getcount',
         [
@@ -64,7 +64,7 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
 
       $this->setTitle(E::ts("Registration for '%1'", [1 => $eventName]));
 
-      if (isset($isAlreadyRegistered)) {
+      if ($registrationCount > 0) {
         $headline = E::ts('Congratulations! You have successfully registered for the event "%1"!', [1 => $eventName]);
       }
       else {
@@ -88,7 +88,7 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
   /**
    * @throws CRM_Core_Exception
    */
-  public function postProcess():void {
+  public function postProcess(): void {
     parent::postProcess();
     if ($this->code === NULL) {
       return;
@@ -96,7 +96,6 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
 
     $participantId = CRM_Eventinvitation_EventInvitationCode::validate($this->code);
 
-    //TODO: Else Case if NULL - What shall we do then?
     if ($participantId !== NULL) {
       civicrm_api3(
         'Participant',
@@ -105,7 +104,7 @@ class CRM_Eventinvitation_Form_Register extends CRM_Core_Form {
           'id' => $participantId,
           'status_id' => 'Registered',
         ]
-        );
+      );
     }
   }
 

@@ -21,7 +21,7 @@ declare(strict_types = 1);
  *
  * @param array<string, array<string, mixed>> $specs API specs
  */
-function _civicrm_api3_event_invitation_resolve_code_spec(array &$specs):void {
+function _civicrm_api3_event_invitation_resolve_code_spec(array &$specs): void {
   $specs['code'] = [
     'name' => 'code',
     'api.required' => 1,

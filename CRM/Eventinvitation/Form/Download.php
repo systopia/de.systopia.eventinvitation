@@ -33,7 +33,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
   /**
    * @throws CRM_Core_Exception
    */
-  public function buildQuickForm():void {
+  public function buildQuickForm(): void {
     /** @var string|null $tmpFolder */
     $tmpFolder = CRM_Utils_Request::retrieve('tmp_folder', 'String', $this);
     $this->tmp_folder = (string) $tmpFolder;
@@ -65,7 +65,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
   /**
    * @throws IllegalPathException
    */
-  public function postProcess():void {
+  public function postProcess(): void {
     // this means somebody clicked download
     $vars = $this->exportValues();
     if (isset($vars['_qf_Download_submit'])) {
@@ -81,7 +81,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
   /**
    * @throws IllegalPathException
    */
-  private function handleDownloadSubmit():void {
+  private function handleDownloadSubmit(): void {
     // verify folder
     if (preg_match('#/eventinvitation_pdf_generator_\w+$#', $this->tmp_folder) === FALSE) {
       throw new IllegalPathException('Illegal path!');
@@ -103,18 +103,18 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
     }
     // @ignoreException
     // @phpstan-ignore-next-line
-    catch (Exception $ex) {
+    catch (Exception $exception) {
       CRM_Core_Session::setStatus(
-        E::ts('Error downloading PDF files: %1', [1 => $ex->getMessage()]),
+        E::ts('Error downloading PDF files: %1', [1 => $exception->getMessage()]),
         E::ts('Download Error'),
         'error');
     }
   }
 
-  private function handleDownloadDone():void {
+  private function handleDownloadDone(): void {
     // delete tmp folder
     foreach (scandir($this->tmp_folder) as $file) {
-      if ($file !== '.' && $file !== '..') {
+      if ('.' !== $file && '..' !== $file) {
         unlink($this->tmp_folder . DIRECTORY_SEPARATOR . $file);
       }
     }
@@ -127,7 +127,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
     }
   }
 
-  private function buildZipFile(string $filename):void {
+  private function buildZipFile(string $filename): void {
     // first: try with command line tool to avoid memory issues
     $pattern = E::ts('Invitation-%1.pdf', [1 => '*']);
     $command = "cd {$this->tmp_folder} && zip all.zip {$pattern}";
@@ -155,7 +155,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
     $zip->close();
   }
 
-  private function streamZipFile(string $filename):void {
+  private function streamZipFile(string $filename): void {
     // set file metadata
     header('Content-Type: application/zip');
     header('Content-Disposition: attachment; filename=' . E::ts('Invitations.zip'));
@@ -174,7 +174,7 @@ class CRM_Eventinvitation_Form_Download extends CRM_Core_Form {
     // 16 MB chunks
     $chunkSize = 16 * 1024 * 1024;
     $handle = fopen($filename, 'rb');
-    if ($handle !== FALSE) {
+    if (FALSE !== $handle) {
       while (!feof($handle)) {
         $buffer = fread($handle, $chunkSize);
         echo $buffer;
