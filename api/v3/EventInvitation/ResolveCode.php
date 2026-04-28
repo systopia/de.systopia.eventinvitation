@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*-------------------------------------------------------+
 | SYSTOPIA Event Invitation                              |
 | Copyright (C) 2020 SYSTOPIA                            |
@@ -17,38 +19,42 @@
 /**
  * Specs for the resolve of an event invitation code.
  *
- * @param array $specs API specs
+ * @param array<string, array<string, mixed>> $specs API specs
  */
-function _civicrm_api3_event_invitation_resolve_code_spec(array &$specs)
-{
-    $specs['code'] = [
-        'name' => 'code',
-        'api.required' => 1,
-        'type' => CRM_Utils_Type::T_STRING,
-        'title' => 'Event invitation code',
-        'description' => '',
-    ];
+function _civicrm_api3_event_invitation_resolve_code_spec(array &$specs): void {
+  $specs['code'] = [
+    'name' => 'code',
+    'api.required' => 1,
+    'type' => CRM_Utils_Type::T_STRING,
+    'title' => 'Event invitation code',
+    'description' => '',
+  ];
 }
 
 /**
  * Resolve an event invitation code.
  *
- * @param array $params API parameters
- * @return array The participant ID
+ * @param array<string, mixed> $params API parameters
+ * @return array<string, mixed>
+ * @throws CRM_Core_Exception
  */
-function civicrm_api3_event_invitation_resolve_code(array $params)
-{
-    $code = $params['code'];
+function civicrm_api3_event_invitation_resolve_code(array $params):array {
 
-    if (empty($code)) {
-        return civicrm_api3_create_error('No code given'); // TODO: Better message?
-    } else {
-        $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
+  /** @var string $code */
+  $code = $params['code'];
 
-        if ($participantId === null) {
-            return civicrm_api3_create_error('The code is invalid or expired.');
-        } else {
-            return civicrm_api3_create_success($participantId);
-        }
+  if (!isset($code)) {
+    // TODO: Better message?
+    return civicrm_api3_create_error('No code given');
+  }
+  else {
+    $participantId = CRM_Eventinvitation_EventInvitationCode::validate($code);
+
+    if ($participantId === NULL) {
+      return civicrm_api3_create_error('The code is invalid or expired.');
     }
+    else {
+      return civicrm_api3_create_success($participantId);
+    }
+  }
 }

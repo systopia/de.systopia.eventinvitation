@@ -18,7 +18,7 @@
   <version>1.2.0-dev</version>
   <develStage>dev</develStage>
   <compatibility>
-    <ver>5.38</ver>
+    <ver>5.76</ver>
   </compatibility>
   <requires>
     <ext>de.systopia.remotetools</ext>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /*-------------------------------------------------------+
 | SYSTOPIA Event Invitation                              |
 | Copyright (C) 2020 SYSTOPIA                            |
@@ -14,61 +16,60 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*/
 
-use CRM_Eventinvitation_ExtensionUtil as E;
+use Civi\Api4\Email;
 
-class CRM_Eventinvitation_Queue_Runner_EmailSender extends CRM_Eventinvitation_Queue_Runner_Job
-{
-    /** @var string $template */
-    protected $emailSender;
+class CRM_Eventinvitation_Queue_Runner_EmailSender extends CRM_Eventinvitation_Queue_Runner_Job {
 
-    public function __construct(
+  protected string $emailSender;
+
+  public function __construct(
         CRM_Eventinvitation_Object_RunnerData $runnerData,
-        $emailSender,
+        string $emailSender,
         int $offset
     ) {
-        parent::__construct($runnerData, $offset);
-        $this->emailSender = $emailSender;
+    parent::__construct($runnerData, $offset);
+    $this->emailSender = $emailSender;
+  }
+
+  /**
+   * Email the given contact.
+   *
+   * @param int $contactId
+   *   contact ID
+   * @param array<string, mixed> $templateTokens
+   *   key => value for Smarty parsing
+   *
+   * @throws CRM_Core_Exception
+   */
+  protected function processContact(int $contactId, array $templateTokens) :void {
+    $contactData = (array) civicrm_api3(
+        'Contact',
+        'getsingle',
+        [
+          'id' => $contactId,
+          'return' => 'display_name,email',
+        ]
+    );
+
+    $email = Email::get(FALSE)
+      ->selectRowCount()
+      ->addWhere('contact_id', '=', $contactId)
+      ->addWhere('email', '=', $contactData['email'])
+      ->addWhere('on_hold', '=', 0)
+      ->execute()
+      ->count();
+    if ($email >= 1) {
+      $emailData = [
+        'id' => $this->runnerData->templateId,
+        'toName' => $contactData['display_name'],
+        'toEmail' => $contactData['email'],
+        'from' => $this->emailSender,
+        'contactId' => $contactId,
+        'tplParams' => $templateTokens,
+      ];
+
+      civicrm_api3('MessageTemplate', 'send', $emailData);
     }
+  }
 
-
-    /**
-     * Send an email to the given contact
-     *
-     * @param integer $contactId
-     *   contact ID
-     * @param array $templateTokens
-     *   tokens
-     *
-     * @throws \CRM_Core_Exception
-     */
-    protected function processContact($contactId, $templateTokens)
-    {
-        $contactData = civicrm_api3(
-            'Contact',
-            'getsingle',
-            [
-                'id' => $contactId,
-                'return' => 'display_name,email'
-            ]
-        );
-        $email = \Civi\Api4\Email::get(FALSE)
-            ->selectRowCount()
-            ->addWhere('contact_id', '=', $contactId)
-            ->addWhere('email', '=', $contactData['email'])
-            ->addWhere('on_hold', '=', 0)
-            ->execute()
-            ->count();
-        if ($email >= 1) {
-            $emailData = [
-                'id' => $this->runnerData->templateId,
-                'toName' => $contactData['display_name'],
-                'toEmail' => $contactData['email'],
-                'from' => $this->emailSender,
-                'contactId' => $contactId,
-                'tplParams' => $templateTokens,
-            ];
-
-            civicrm_api3('MessageTemplate', 'send', $emailData);
-        }
-    }
 }
