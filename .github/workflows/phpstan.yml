@@ -77,6 +77,8 @@ jobs:
         git clone --depth=1 https://github.com/systopia/de.systopia.remotetools.git ../de.systopia.remotetools
         git clone --depth=1 https://github.com/systopia/de.systopia.xcm.git ../de.systopia.xcm
         git clone --depth=1 https://github.com/systopia/de.systopia.identitytracker.git ../de.systopia.identitytracker
+        git clone --depth=1 https://github.com/systopia/de.systopia.resource.git ../de.systopia.resource
+        git clone --depth=1 https://github.com/systopia/de.systopia.resourceevent.git ../de.systopia.resourceevent
 
         # Run with --no-scripts so ComposerHelper doesn't prevent installation
         # of civicrm packages.
