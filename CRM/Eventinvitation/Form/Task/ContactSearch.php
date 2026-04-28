@@ -192,11 +192,13 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
 
     $contactIds = $this->_contactIds;
 
+    // @phpstan-ignore argument.type
     if (!$shallBePdfs && !$this->contactsHaveEmails($contactIds)) {
       $msg = E::ts('There are contacts that have no usable e-mail address.');
       $this->_errors[self::PDFS_INSTEAD_OF_EMAILS_ELEMENT_NAME] = $msg;
     }
 
+    // @phpstan-ignore argument.type
     if ($this->contactsHaveNotInvitedParticipants($contactIds, $eventId, $participantRoleId)) {
       $msg = E::ts('There are contacts that are participants with a status other than "Invited".');
       $this->_errors[self::EVENT_ELEMENT_NAME] = $msg;
@@ -329,6 +331,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
     $emailSender = $senderOptions[$emailSenderId];
 
     $runnerData = new CRM_Eventinvitation_Object_RunnerData();
+    // @phpstan-ignore assign.propertyType
     $runnerData->contactIds = $this->_contactIds;
     $runnerData->eventId = $values[self::EVENT_ELEMENT_NAME];
     $runnerData->participantRoleId = $values[self::PARTICIPANT_ROLES_ELEMENT_NAME];
