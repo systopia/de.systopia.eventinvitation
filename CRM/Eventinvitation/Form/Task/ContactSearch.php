@@ -103,6 +103,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         TRUE,
         [
           'class' => 'crm-select2 huge',
+          'placeholder' => TRUE,
         ]
     );
 
@@ -115,6 +116,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         TRUE,
         [
           'class' => 'crm-select2 huge',
+          'placeholder' => TRUE,
         ]
     );
 
@@ -127,6 +129,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         TRUE,
         [
           'class' => 'crm-select2 huge',
+          'placeholder' => TRUE,
         ]
     );
 
