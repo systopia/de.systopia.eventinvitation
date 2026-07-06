@@ -246,8 +246,11 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         ";
 
     $emailCount = CRM_Core_DAO::singleValueQuery($query);
+    if (!is_numeric($emailCount)) {
+      throw new RuntimeException('Error validating e-mail count');
+    }
 
-    return $emailCount === count($contactIds);
+    return (int) $emailCount === count($contactIds);
   }
 
   /**
