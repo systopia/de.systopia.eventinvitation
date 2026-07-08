@@ -9,6 +9,12 @@ require_once 'eventinvitation.civix.php';
 
 use CRM_Eventinvitation_ExtensionUtil as E;
 
+function _eventinvitation_composer_autoload(): void {
+  if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+  }
+}
+
 /**
  * @param string $objectType
  * @param array<int, array<string, mixed>> $tasks
@@ -31,6 +37,7 @@ function eventinvitation_civicrm_searchTasks(string $objectType, array &$tasks):
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
 function eventinvitation_civicrm_config(CRM_Core_Config $config): void {
+  _eventinvitation_composer_autoload();
   _eventinvitation_civix_civicrm_config($config);
 }
 
