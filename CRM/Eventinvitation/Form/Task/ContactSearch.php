@@ -336,12 +336,12 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
     $runnerData = new CRM_Eventinvitation_Object_RunnerData();
     // @phpstan-ignore assign.propertyType
     $runnerData->contactIds = $this->_contactIds;
-    $runnerData->eventId = $values[self::EVENT_ELEMENT_NAME];
-    $runnerData->participantRoleId = $values[self::PARTICIPANT_ROLES_ELEMENT_NAME];
+    $runnerData->eventId = (int) $values[self::EVENT_ELEMENT_NAME];
+    $runnerData->participantRoleId = (int) $values[self::PARTICIPANT_ROLES_ELEMENT_NAME];
     if (isset($values['resource_demand_id'])) {
       $runnerData->resourceDemandId = $values['resource_demand_id'];
     }
-    $runnerData->templateId = $values[self::TEMPLATE_ELEMENT_NAME];
+    $runnerData->templateId = (int) $values[self::TEMPLATE_ELEMENT_NAME];
 
     // Forward back to the search:
     $targetUrl = html_entity_decode(CRM_Core_Session::singleton()->readUserContext());
