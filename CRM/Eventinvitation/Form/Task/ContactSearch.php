@@ -247,7 +247,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
 
     $emailCount = CRM_Core_DAO::singleValueQuery($query);
 
-    return $emailCount === count($contactIds);
+    return (int) $emailCount === count($contactIds);
   }
 
   /**
@@ -271,7 +271,7 @@ class CRM_Eventinvitation_Form_Task_ContactSearch extends CRM_Contact_Form_Task 
         ]
     );
 
-    return $non_invite_participant_count > 0;
+    return (int) $non_invite_participant_count > 0;
   }
 
   /**

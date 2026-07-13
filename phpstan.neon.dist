@@ -19,6 +19,7 @@ parameters:
 		- ../de.systopia.resourceevent
 		- ../de.systopia.resource
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/src/Framework
+		- vendor/chillerlan
 		- mixin
 	bootstrapFiles:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/vendor/autoload.php
