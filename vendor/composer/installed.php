@@ -1,0 +1,45 @@
+<?php return array(
+    'root' => array(
+        'name' => 'systopia/de.systopia.eventinvitation',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '9d2d1ca4b4a72e14eef92ca315be641feaf0a634',
+        'type' => 'civicrm-ext',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(
+            0 => '1.4.x-dev',
+        ),
+        'dev' => false,
+    ),
+    'versions' => array(
+        'chillerlan/php-qrcode' => array(
+            'pretty_version' => '5.0.5',
+            'version' => '5.0.5.0',
+            'reference' => '7b66282572fc14075c0507d74d9837dab25b38d6',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../chillerlan/php-qrcode',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'chillerlan/php-settings-container' => array(
+            'pretty_version' => '3.3.0',
+            'version' => '3.3.0.0',
+            'reference' => 'a0a487cbf5344f721eb504bf0f59bada40c381b7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../chillerlan/php-settings-container',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'systopia/de.systopia.eventinvitation' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '9d2d1ca4b4a72e14eef92ca315be641feaf0a634',
+            'type' => 'civicrm-ext',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(
+                0 => '1.4.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
+    ),
+);
