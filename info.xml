@@ -21,6 +21,7 @@
     <ver>5.76</ver>
   </compatibility>
   <requires>
+    <ext>civi_event</ext>
     <ext>de.systopia.remotetools</ext>
   </requires>
   <comments>Initial implementation by zschiedrich@systopia.de</comments>
