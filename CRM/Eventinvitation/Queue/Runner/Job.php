@@ -152,7 +152,7 @@ abstract class CRM_Eventinvitation_Queue_Runner_Job {
     if (
         is_array($settings)
         && isset($settings[CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME])
-        && 1 === $settings[CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME]
+        && (bool) $settings[CRM_Eventinvitation_Form_Settings::LINK_TARGET_IS_CUSTOM_FORM_NAME]
         && isset($settings[CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME])
         && '' !== $settings[CRM_Eventinvitation_Form_Settings::CUSTOM_LINK_TARGET_FORM_NAME]
     ) {
